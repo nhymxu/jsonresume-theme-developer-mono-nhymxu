@@ -1,7 +1,6 @@
-import { jsxs, jsx } from "react/jsx-runtime";
-import { renderResumeDocument } from "@jsonresume/core/ssr";
-import t, { createElement } from "react";
-import { ContactInfo, DateRange, Link, safeUrl, Section, SectionTitle, BadgeList, Badge } from "@jsonresume/core";
+import { jsx, jsxs } from "react/jsx-runtime";
+import { renderToStaticMarkup } from "react-dom/server";
+import t, { createElement, createContext } from "react";
 function memoize(fn) {
   var cache = /* @__PURE__ */ Object.create(null);
   return function(arg) {
@@ -320,8 +319,8 @@ function ruleset(value, root, parent, index, offset, rules, points, type, props,
   var rule = offset === 0 ? rules : [""];
   var size = sizeof(rule);
   for (var i2 = 0, j2 = 0, k2 = 0; i2 < index; ++i2)
-    for (var x2 = 0, y = substr(value, post + 1, post = abs(j2 = points[i2])), z2 = value; x2 < size; ++x2)
-      if (z2 = trim(j2 > 0 ? rule[x2] + " " + y : replace(y, /&\f/g, rule[x2])))
+    for (var x2 = 0, y2 = substr(value, post + 1, post = abs(j2 = points[i2])), z2 = value; x2 < size; ++x2)
+      if (z2 = trim(j2 > 0 ? rule[x2] + " " + y2 : replace(y2, /&\f/g, rule[x2])))
         props[k2++] = z2;
   return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length2, siblings);
 }
@@ -559,7 +558,7 @@ function f(e) {
     if (void 0 !== t2 && "" !== t2) return "false" !== t2;
   }
 }
-const m = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : null !== (i = null !== (r = f("REACT_APP_SC_DISABLE_SPEEDY")) && void 0 !== r ? r : f("SC_DISABLE_SPEEDY")) && void 0 !== i ? i : "undefined" != typeof process && void 0 !== process.env && "production" !== process.env.NODE_ENV), g = "sc-keyframes-", v = "production" !== process.env.NODE_ENV ? { 1: "Cannot create styled-component for component: %s.\n\n", 2: "Can't collect styles once you've consumed a `ServerStyleSheet`'s styles! `ServerStyleSheet` is a one off instance for each server-side render cycle.\n\n- Are you trying to reuse it across renders?\n- Are you accidentally calling collectStyles twice?\n\n", 3: "Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.\n\n", 4: "The `StyleSheetManager` expects a valid target or sheet prop!\n\n- Does this error occur on the client and is your target falsy?\n- Does this error occur on the server and is the sheet falsy?\n\n", 5: "The clone method cannot be used on the client!\n\n- Are you running in a client-like environment on the server?\n- Are you trying to run SSR on the client?\n\n", 6: "Trying to insert a new style tag, but the given Node is unmounted!\n\n- Are you using a custom target that isn't mounted?\n- Does your document not have a valid head element?\n- Have you accidentally removed a style tag manually?\n\n", 7: 'ThemeProvider: Please return an object from your "theme" prop function, e.g.\n\n```js\ntheme={() => ({})}\n```\n\n', 8: 'ThemeProvider: Please make your "theme" prop an object.\n\n', 9: "Missing document `<head>`\n\n", 10: "Cannot find a StyleSheet instance. Usually this happens if there are multiple copies of styled-components loaded at once. Check out this issue for how to troubleshoot and fix the common cases where this situation can happen: https://github.com/styled-components/styled-components/issues/1941#issuecomment-417862021\n\n", 11: "_This error was replaced with a dev-time warning, it will be deleted for v4 final._ [createGlobalStyle] received children which will not be rendered. Please use the component without passing children elements.\n\n", 12: "It seems you are interpolating a keyframe declaration (%s) into an untagged string. Please wrap your string in the css\\`\\` helper which ensures the styles are injected correctly. See https://styled-components.com/docs/api#css\n\n", 13: "%s is not a styled component and cannot be referred to via component selector. See https://styled-components.com/docs/advanced#referring-to-other-components for more details.\n\n", 14: 'ThemeProvider: "theme" prop is required.\n\n', 15: "A stylis plugin has been supplied that is not named. We need a name for each plugin to be able to prevent styling collisions between different stylis configurations within the same app. Before you pass your plugin to `<StyleSheetManager stylisPlugins={[]}>`, please make sure each plugin is uniquely-named, e.g.\n\n```js\nObject.defineProperty(importedPlugin, 'name', { value: 'some-unique-name' });\n```\n\n", 16: "Reached the limit of how many styled components may be created at group %s.\nYou may only create up to 1,073,741,824 components. If you're creating components dynamically,\nas for instance in your render method then you may be running into this limitation.\n\n", 17: "CSSStyleSheet could not be found on HTMLStyleElement.\nHas styled-components' style tag been unmounted or altered by another script?\n\n", 18: "Accessing `useTheme` hook outside of a `<ThemeProvider>` element.\n\n```jsx\nimport { useTheme } from 'styled-components';\nexport function StyledCompoent({ children }) {\n  const theme = useTheme();\n  return <div style={{ width: theme.sizes.full }}>{children}</div>;\n}\n\nimport { StyledComponent } from './StyledComponent';\nimport { theme } from './theme';\nexport function App() {\n  return (\n    <ThemeProvider theme={theme}>\n      <StyledComponent />\n    </ThemeProvider>\n  );\n}\n```\n\nIf you need access to the theme in an uncertain composition scenario, `React.useContext(ThemeContext)` will not emit an error if there is no `ThemeProvider` ancestor.\n" } : {};
+const m = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : null !== (i = null !== (r = f("REACT_APP_SC_DISABLE_SPEEDY")) && void 0 !== r ? r : f("SC_DISABLE_SPEEDY")) && void 0 !== i ? i : "undefined" != typeof process && void 0 !== process.env && "production" !== process.env.NODE_ENV), g = "sc-keyframes-", y = {}, v = "production" !== process.env.NODE_ENV ? { 1: "Cannot create styled-component for component: %s.\n\n", 2: "Can't collect styles once you've consumed a `ServerStyleSheet`'s styles! `ServerStyleSheet` is a one off instance for each server-side render cycle.\n\n- Are you trying to reuse it across renders?\n- Are you accidentally calling collectStyles twice?\n\n", 3: "Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.\n\n", 4: "The `StyleSheetManager` expects a valid target or sheet prop!\n\n- Does this error occur on the client and is your target falsy?\n- Does this error occur on the server and is the sheet falsy?\n\n", 5: "The clone method cannot be used on the client!\n\n- Are you running in a client-like environment on the server?\n- Are you trying to run SSR on the client?\n\n", 6: "Trying to insert a new style tag, but the given Node is unmounted!\n\n- Are you using a custom target that isn't mounted?\n- Does your document not have a valid head element?\n- Have you accidentally removed a style tag manually?\n\n", 7: 'ThemeProvider: Please return an object from your "theme" prop function, e.g.\n\n```js\ntheme={() => ({})}\n```\n\n', 8: 'ThemeProvider: Please make your "theme" prop an object.\n\n', 9: "Missing document `<head>`\n\n", 10: "Cannot find a StyleSheet instance. Usually this happens if there are multiple copies of styled-components loaded at once. Check out this issue for how to troubleshoot and fix the common cases where this situation can happen: https://github.com/styled-components/styled-components/issues/1941#issuecomment-417862021\n\n", 11: "_This error was replaced with a dev-time warning, it will be deleted for v4 final._ [createGlobalStyle] received children which will not be rendered. Please use the component without passing children elements.\n\n", 12: "It seems you are interpolating a keyframe declaration (%s) into an untagged string. Please wrap your string in the css\\`\\` helper which ensures the styles are injected correctly. See https://styled-components.com/docs/api#css\n\n", 13: "%s is not a styled component and cannot be referred to via component selector. See https://styled-components.com/docs/advanced#referring-to-other-components for more details.\n\n", 14: 'ThemeProvider: "theme" prop is required.\n\n', 15: "A stylis plugin has been supplied that is not named. We need a name for each plugin to be able to prevent styling collisions between different stylis configurations within the same app. Before you pass your plugin to `<StyleSheetManager stylisPlugins={[]}>`, please make sure each plugin is uniquely-named, e.g.\n\n```js\nObject.defineProperty(importedPlugin, 'name', { value: 'some-unique-name' });\n```\n\n", 16: "Reached the limit of how many styled components may be created at group %s.\nYou may only create up to 1,073,741,824 components. If you're creating components dynamically,\nas for instance in your render method then you may be running into this limitation.\n\n", 17: "CSSStyleSheet could not be found on HTMLStyleElement.\nHas styled-components' style tag been unmounted or altered by another script?\n\n", 18: "Accessing `useTheme` hook outside of a `<ThemeProvider>` element.\n\n```jsx\nimport { useTheme } from 'styled-components';\nexport function StyledCompoent({ children }) {\n  const theme = useTheme();\n  return <div style={{ width: theme.sizes.full }}>{children}</div>;\n}\n\nimport { StyledComponent } from './StyledComponent';\nimport { theme } from './theme';\nexport function App() {\n  return (\n    <ThemeProvider theme={theme}>\n      <StyledComponent />\n    </ThemeProvider>\n  );\n}\n```\n\nIf you need access to the theme in an uncertain composition scenario, `React.useContext(ThemeContext)` will not emit an error if there is no `ThemeProvider` ancestor.\n" } : {};
 function S(e, ...t2) {
   return "production" === process.env.NODE_ENV ? new Error(`An error occurred. See https://github.com/styled-components/styled-components/blob/main/packages/styled-components/src/utils/errors.md#${e} for more information.${t2.length > 0 ? ` Args: ${t2.join(", ")}` : ""}`) : new Error(function(...e2) {
     let t3 = e2[0];
@@ -665,7 +664,7 @@ function ae(e, t2) {
   return e && t2 ? e + " " + t2 : e || t2 || "";
 }
 function ue(e, t2) {
-  return e.join("");
+  return e.join(t2 || "");
 }
 function de(e) {
   let t2 = "";
@@ -1101,13 +1100,31 @@ function nt({ options: e = $, plugins: t2 = x } = $) {
 }
 var ot, st, rt;
 const it = new je(), lt = nt();
-let at = null;
+let ct, at = null, ut = lt;
 const dt = p && null !== (rt = null === (st = (ot = t).cache) || void 0 === st ? void 0 : st.call(ot, () => {
   it.names.clear(), it.keyframeIds.clear(), it.clearTag(), at = null;
 })) && void 0 !== rt ? rt : null, ht = { shouldForwardProp: void 0, styleSheet: it, stylis: lt, stylisPlugins: void 0 }, pt = p ? { Provider: ({ children: e }) => e, Consumer: ({ children: e }) => e(ht) } : t.createContext(ht);
 pt.Consumer;
 function mt() {
   return p ? (dt && dt(), at || ht) : t.useContext(pt);
+}
+function gt(e) {
+  var n, o, s;
+  if (p) {
+    dt && dt();
+    const t2 = at || ht, s2 = void 0 !== e.stylisPlugins || void 0 !== e.namespace || void 0 !== e.enableVendorPrefixes;
+    s2 && (e.stylisPlugins && e.stylisPlugins !== ct ? (ct = e.stylisPlugins, ut = nt({ options: { namespace: e.namespace, prefix: e.enableVendorPrefixes }, plugins: e.stylisPlugins })) : void 0 === e.namespace && void 0 === e.enableVendorPrefixes || (ut = nt({ options: { namespace: e.namespace, prefix: e.enableVendorPrefixes }, plugins: null !== (n = e.stylisPlugins) && void 0 !== n ? n : t2.stylisPlugins })));
+    const r3 = s2 ? void 0 === e.stylisPlugins || e.stylisPlugins.length ? ut : lt : t2.stylis, i3 = "shouldForwardProp" in e ? e.shouldForwardProp : t2.shouldForwardProp, l3 = null !== (o = e.stylisPlugins) && void 0 !== o ? o : t2.stylisPlugins;
+    return at = r3 !== lt || i3 ? { shouldForwardProp: i3, styleSheet: it, stylis: r3, stylisPlugins: l3 } : null, e.children;
+  }
+  const r2 = mt(), { styleSheet: i2 } = r2, l2 = t.useMemo(() => {
+    let t2 = i2;
+    return e.sheet ? t2 = e.sheet : e.target ? t2 = t2.reconstructWithOptions(void 0 !== e.nonce ? { target: e.target, nonce: e.nonce } : { target: e.target }, false) : void 0 !== e.nonce && (t2 = t2.reconstructWithOptions({ nonce: e.nonce })), e.disableCSSOMInjection && (t2 = t2.reconstructWithOptions({ useCSSOMInjection: false })), t2;
+  }, [e.disableCSSOMInjection, e.nonce, e.sheet, e.target, i2]), c2 = t.useMemo(() => {
+    var t2;
+    return void 0 === e.stylisPlugins && void 0 === e.namespace && void 0 === e.enableVendorPrefixes ? r2.stylis : nt({ options: { namespace: e.namespace, prefix: e.enableVendorPrefixes }, plugins: null !== (t2 = e.stylisPlugins) && void 0 !== t2 ? t2 : r2.stylisPlugins });
+  }, [e.enableVendorPrefixes, e.namespace, e.stylisPlugins, r2.stylis, r2.stylisPlugins]), a2 = "shouldForwardProp" in e ? e.shouldForwardProp : r2.shouldForwardProp, u2 = null !== (s = e.stylisPlugins) && void 0 !== s ? s : r2.stylisPlugins, d2 = t.useMemo(() => ({ shouldForwardProp: a2, styleSheet: l2, stylis: c2, stylisPlugins: u2 }), [a2, l2, c2, u2]);
+  return t.createElement(pt.Provider, { value: d2 }, e.children);
 }
 const yt = p ? { Provider: ({ children: e }) => e, Consumer: ({ children: e }) => e(void 0) } : t.createContext(void 0);
 yt.Consumer;
@@ -1134,18 +1151,18 @@ function It(e, t2, n) {
 }
 function At(o, s, r2) {
   const i2 = ce(o), c2 = o, a2 = !L(o), { attrs: u2 = x, componentId: h2 = Nt(s.displayName, s.parentComponentId), displayName: f2 = q(o) } = s, m2 = s.displayName && s.componentId ? T(s.displayName) + "-" + s.componentId : s.componentId || h2, g2 = i2 && c2.attrs ? c2.attrs.concat(u2).filter(Boolean) : u2;
-  let { shouldForwardProp: y } = s;
+  let { shouldForwardProp: y2 } = s;
   if (i2 && c2.shouldForwardProp) {
     const e = c2.shouldForwardProp;
     if (s.shouldForwardProp) {
       const t2 = s.shouldForwardProp;
-      y = (n, o2) => e(n, o2) && t2(n, o2);
-    } else y = e;
+      y2 = (n, o2) => e(n, o2) && t2(n, o2);
+    } else y2 = e;
   }
   const v2 = new Ze(r2, m2, i2 ? c2.componentStyle : void 0);
   function S2(o2, s2) {
     return function(o3, s3, r3) {
-      const { attrs: i3, componentStyle: c3, defaultProps: a3, foldedComponentIds: u3, styledComponentId: h3, target: f3 } = o3, m3 = p ? void 0 : t.useContext(yt), g3 = mt(), y2 = o3.shouldForwardProp || g3.shouldForwardProp;
+      const { attrs: i3, componentStyle: c3, defaultProps: a3, foldedComponentIds: u3, styledComponentId: h3, target: f3 } = o3, m3 = p ? void 0 : t.useContext(yt), g3 = mt(), y3 = o3.shouldForwardProp || g3.shouldForwardProp;
       "production" !== process.env.NODE_ENV && t.useDebugValue && t.useDebugValue(h3);
       const v3 = R(s3, m3, a3) || (p ? void 0 : $);
       let S3, b3;
@@ -1164,7 +1181,7 @@ function At(o, s, r2) {
         const r4 = {};
         for (const i4 in t2) void 0 === t2[i4] || "$" === i4[0] || "as" === i4 || "theme" === i4 && t2.theme === o4 || ("forwardedAs" === i4 ? r4.as = t2.forwardedAs : s4 && !s4(i4, n) || (r4[i4] = t2[i4], s4 || "development" !== process.env.NODE_ENV || isPropValid(i4) || (Ct || (Ct = /* @__PURE__ */ new Set())).has(i4) || !L(n) || n.includes("-") || (Ct.add(i4), console.warn(`styled-components: it looks like an unknown prop "${i4}" is being sent through to the DOM, which will likely trigger a React console error. If you would like automatic filtering of unknown props, you can opt-into that behavior via \`<StyleSheetManager shouldForwardProp={...}>\` (connect an API like \`@emotion/is-prop-valid\`) or consider using transient props (\`$\` prefix for automatic filtering.)`))));
         return r4;
-      }(S3, w2, v3, y2);
+      }(S3, w2, v3, y3);
       let C2 = ae(u3, h3);
       b3 && (C2 += " " + b3), S3.className && (C2 += " " + S3.className), N2[L(w2) && w2.includes("-") ? "class" : "className"] = C2, r3 && (N2.ref = r3);
       const O2 = createElement(w2, N2);
@@ -1227,7 +1244,7 @@ function At(o, s, r2) {
   }
   S2.displayName = f2;
   let b2 = t.forwardRef(S2);
-  return b2.attrs = g2, b2.componentStyle = v2, b2.displayName = f2, b2.shouldForwardProp = y, b2.foldedComponentIds = i2 ? ae(c2.foldedComponentIds, c2.styledComponentId) : "", b2.styledComponentId = m2, b2.target = i2 ? c2.target : o, Object.defineProperty(b2, "defaultProps", { get() {
+  return b2.attrs = g2, b2.componentStyle = v2, b2.displayName = f2, b2.shouldForwardProp = y2, b2.foldedComponentIds = i2 ? ae(c2.foldedComponentIds, c2.styledComponentId) : "", b2.styledComponentId = m2, b2.target = i2 ? c2.target : o, Object.defineProperty(b2, "defaultProps", { get() {
     return this._foldedDefaultProps;
   }, set(e) {
     this._foldedDefaultProps = i2 ? function(e2, ...t2) {
@@ -1271,10 +1288,4981 @@ const kt = (e) => jt(At, e), Tt = kt;
 _t.forEach((e) => {
   Tt[e] = kt(e);
 });
-me(() => /* @__PURE__ */ new Set());
+class Dt {
+  constructor(e, t2) {
+    this.instanceRules = /* @__PURE__ */ new Map(), this.rules = e, this.componentId = t2, this.isStatic = function(e2) {
+      for (let t3 = 0; t3 < e2.length; t3 += 1) {
+        const n = e2[t3];
+        if (ie(n) && !ce(n)) return false;
+      }
+      return true;
+    }(e), je.registerId(this.componentId);
+  }
+  removeStyles(e, t2) {
+    this.instanceRules.delete(e), this.rebuildGroup(t2);
+  }
+  renderStyles(e, t2, n, o) {
+    const s = this.componentId;
+    if (this.isStatic) {
+      if (n.hasNameForId(s, s + e)) this.instanceRules.has(e) || this.computeRules(e, t2, n, o);
+      else {
+        const r3 = this.computeRules(e, t2, n, o);
+        n.insertRules(s, r3.name, r3.rules);
+      }
+      return;
+    }
+    const r2 = this.instanceRules.get(e);
+    if (this.computeRules(e, t2, n, o), !n.server && r2) {
+      const t3 = r2.rules, n2 = this.instanceRules.get(e).rules;
+      if (t3.length === n2.length) {
+        let e2 = true;
+        for (let o2 = 0; o2 < t3.length; o2++) if (t3[o2] !== n2[o2]) {
+          e2 = false;
+          break;
+        }
+        if (e2) return;
+      }
+    }
+    this.rebuildGroup(n);
+  }
+  computeRules(e, t2, n, o) {
+    const s = ue(Ye(this.rules, t2, n, o)), r2 = { name: this.componentId + e, rules: o(s, "") };
+    return this.instanceRules.set(e, r2), r2;
+  }
+  rebuildGroup(e) {
+    const t2 = this.componentId;
+    e.clearRules(t2);
+    for (const n of this.instanceRules.values()) e.insertRules(t2, n.name, n.rules);
+  }
+}
+const Mt = me(() => /* @__PURE__ */ new Set());
+function Vt(e, ...n) {
+  const o = Rt(e, ...n), s = `sc-global-${W(JSON.stringify(o))}`, r2 = new Dt(o, s);
+  "production" !== process.env.NODE_ENV && _(s);
+  const i2 = (e2) => {
+    const n2 = mt(), l2 = p ? void 0 : t.useContext(yt);
+    let c2;
+    if (c2 = n2.styleSheet.allocateGSInstance(s), "production" !== process.env.NODE_ENV && t.Children.count(e2.children) && console.warn(`The global style component ${s} was given child JSX. createGlobalStyle does not render children.`), "production" !== process.env.NODE_ENV && o.some((e3) => "string" == typeof e3 && -1 !== e3.indexOf("@import")) && console.warn("Please do not use @import CSS syntax in createGlobalStyle at this time, as the CSSOM APIs we use in production do not handle it well. Instead, we recommend using a library such as react-helmet to inject a typical <link> meta tag to the stylesheet, or simply embedding it manually in your index.html <head> section for a simpler app."), (p || n2.styleSheet.server) && function(e3, t2, n3, o2, s2) {
+      if (r2.isStatic) r2.renderStyles(e3, y, n3, s2);
+      else {
+        const l3 = Object.assign(Object.assign({}, t2), { theme: R(t2, o2, i2.defaultProps) });
+        r2.renderStyles(e3, l3, n3, s2);
+      }
+    }(c2, e2, n2.styleSheet, l2, n2.stylis), p) {
+      const e3 = "undefined" == typeof window ? r2.instanceRules.get(c2) : void 0, o2 = e3 ? de(e3.rules) : "";
+      if (o2) {
+        r2.instanceRules.delete(c2);
+        const e4 = Mt ? Mt() : null;
+        if (e4) {
+          const t2 = r2.isStatic ? s + n2.stylis.hash : o2;
+          if (e4.has(t2)) return null;
+          e4.add(t2);
+        }
+        return t.createElement("style", { key: s + "-" + c2, "data-styled-global": s, children: he(o2) });
+      }
+    }
+    return r2.instanceRules.delete(c2), null;
+  };
+  return t.memo(i2);
+}
+const Yt = /^\s*<\/[a-z]/i;
+class Ut {
+  constructor({ nonce: e } = {}) {
+    this._emitSheetCSS = () => {
+      const e2 = this.instance.toString();
+      if (!e2) return "";
+      const t2 = this.instance.options.nonce || Ee();
+      return `<style ${ue([t2 && `nonce="${t2}"`, `${l}="true"`, `${a}="${u}"`].filter(Boolean), " ")}>${e2}</style>`;
+    }, this.getStyleTags = () => {
+      if (this.sealed) throw S(2);
+      return this._emitSheetCSS();
+    }, this.getStyleElement = () => {
+      if (this.sealed) throw S(2);
+      const e2 = this.instance.toString();
+      if (!e2) return [];
+      const n = { [l]: "", [a]: u, dangerouslySetInnerHTML: { __html: e2 } }, o = this.instance.options.nonce || Ee();
+      return o && (n.nonce = o), [t.createElement("style", Object.assign({}, n, { key: "sc-0-0" }))];
+    }, this.seal = () => {
+      this.sealed = true;
+    }, this.instance = new je({ isServer: true, nonce: e }), this.sealed = false;
+  }
+  collectStyles(e) {
+    if (this.sealed) throw S(2);
+    return t.createElement(gt, { sheet: this.instance }, e);
+  }
+  interleaveWithNodeStream(e) {
+    if (this.sealed) throw S(2);
+    this.seal();
+    const { Transform: t2 } = require("stream"), { instance: n, _emitSheetCSS: o } = this, s = new t2({ transform: function(e2, t3, s2) {
+      const r2 = e2.toString(), i2 = o();
+      if (n.clearTag(), Yt.test(r2)) {
+        const e3 = r2.indexOf(">") + 1, t4 = r2.slice(0, e3), n2 = r2.slice(e3);
+        this.push(t4 + i2 + n2);
+      } else this.push(i2 + r2);
+      s2();
+    } });
+    if ("on" in e && "function" == typeof e.on && "pipe" in e) {
+      const t3 = e;
+      return t3.on("error", (e2) => {
+        s.emit("error", e2);
+      }), t3.pipe(s);
+    }
+    if ("pipe" in e && "function" == typeof e.pipe) return e.pipe(s);
+    throw new Error("Unsupported stream type");
+  }
+}
 "production" !== process.env.NODE_ENV && "undefined" != typeof navigator && "ReactNative" === navigator.product && console.warn("It looks like you've imported 'styled-components' on React Native.\nPerhaps you're looking to import 'styled-components/native'?\nRead more about this at https://styled-components.com/docs/basics#react-native");
 const Xt = `__sc-${l}__`;
 "production" !== process.env.NODE_ENV && "test" !== process.env.NODE_ENV && "undefined" != typeof window && (window[Xt] || (window[Xt] = 0), 1 === window[Xt] && console.warn("It looks like there are several instances of 'styled-components' initialized in this application. This may cause dynamic styles to not render properly, errors during the rehydration process, a missing theme prop, and makes your application bigger without good reason.\n\nSee https://styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page for more info."), window[Xt] += 1);
+const CSS_RESET = "<style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}body{-webkit-font-smoothing:antialiased}</style>";
+const TOKENS_CSS_HREF = "https://unpkg.com/@jsonresume/core/dist/tokens.css";
+const FONTS_PRECONNECT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+function isHref(value) {
+  return /^(https?:)?\/\//.test(value) || value.trim().startsWith("<link");
+}
+function familyParam(family) {
+  const [name, ...rest] = String(family).split(":");
+  const encodedName = name.trim().replace(/\s+/g, "+");
+  return rest.length ? `${encodedName}:${rest.join(":")}` : encodedName;
+}
+function googleFontsLinks(families) {
+  if (!Array.isArray(families) || families.length === 0) return "";
+  const passthrough = [];
+  const names = [];
+  for (const entry of families) {
+    if (entry == null || entry === "") continue;
+    if (isHref(entry)) passthrough.push(entry);
+    else names.push(entry);
+  }
+  const links = passthrough.map(
+    (href) => href.trim().startsWith("<link") ? href : `<link href="${href}" rel="stylesheet">`
+  );
+  if (names.length > 0) {
+    const query = names.map(familyParam).join("&family=");
+    links.unshift(
+      `<link href="https://fonts.googleapis.com/css2?family=${query}&display=swap" rel="stylesheet">`
+    );
+  }
+  if (links.length === 0) return "";
+  return FONTS_PRECONNECT + links.join("");
+}
+function renderResumeDocument(element, options = {}) {
+  const {
+    fonts,
+    title,
+    lang = "en",
+    dir = "ltr",
+    reset = false,
+    head = "",
+    headAfterStyles = "",
+    includeTokensCss = true,
+    bodyClass
+  } = options;
+  const sheet = new Ut();
+  let html;
+  let styleTags;
+  try {
+    html = renderToStaticMarkup(sheet.collectStyles(element));
+    styleTags = sheet.getStyleTags();
+  } finally {
+    sheet.seal();
+  }
+  const fontLinks = googleFontsLinks(fonts);
+  const tokensLink = includeTokensCss ? `<link rel="stylesheet" href="${TOKENS_CSS_HREF}">` : "";
+  const resetTag = reset ? CSS_RESET : "";
+  const titleTag = title ? `<title>${title}</title>` : "";
+  const bodyAttr = bodyClass ? ` class="${bodyClass}"` : "";
+  return `<!DOCTYPE html><html lang="${lang}" dir="${dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">` + fontLinks + tokensLink + resetTag + head + styleTags + headAfterStyles + titleTag + `</head><body${bodyAttr}>${html}</body></html>`;
+}
+createContext({
+  theme: "professional",
+  setTheme: () => {
+  }
+});
+Vt`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--resume-font-sans);
+    font-size: var(--resume-size-body);
+    line-height: var(--resume-line-height-normal);
+    color: var(--resume-color-primary);
+    background: var(--resume-color-background);
+  }
+`;
+const StyledSection = Tt.section`
+  margin-bottom: ${(props) => props.theme?.spacing?.section || "var(--resume-space-section, 2rem)"};
+
+  @media print {
+    page-break-inside: avoid;
+  }
+`;
+function Section({ children, className, id, ...rest }) {
+  return /* @__PURE__ */ jsx(
+    StyledSection,
+    {
+      id,
+      className: `resume-section ${className || ""}`.trim(),
+      ...rest,
+      children
+    }
+  );
+}
+const StyledTitle = Tt.h2`
+  font-size: ${(props) => props.theme?.typography?.heading || "var(--resume-size-heading, 16pt)"};
+  font-weight: 600;
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+  margin: 0 0
+    ${(props) => props.theme?.spacing?.item || "var(--resume-space-item, 1rem)"}
+    0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid
+    ${(props) => props.theme?.colors?.accent || "var(--resume-color-accent, #0066cc)"};
+
+  @media print {
+    page-break-after: avoid;
+  }
+`;
+const Icon = Tt.span`
+  margin-right: 8px;
+  font-size: 1.2em;
+`;
+function SectionTitle({
+  children,
+  icon,
+  level = 2,
+  className,
+  ...rest
+}) {
+  return /* @__PURE__ */ jsxs(
+    StyledTitle,
+    {
+      as: `h${level}`,
+      className: `resume-section-title ${className || ""}`.trim(),
+      ...rest,
+      children: [
+        icon && /* @__PURE__ */ jsx(Icon, { "aria-hidden": "true", className: "resume-icon", children: icon }),
+        children
+      ]
+    }
+  );
+}
+Tt.div`
+  margin-bottom: ${(props) => props.theme?.spacing?.item || "var(--resume-space-item, 1rem)"};
+
+  @media print {
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+`;
+Tt.div`
+  font-weight: 600;
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+  font-size: ${(props) => props.theme?.typography?.body || "var(--resume-size-body, 11pt)"};
+`;
+Tt.div`
+  color: ${(props) => props.theme?.colors?.secondary || "var(--resume-color-secondary, #333)"};
+  margin-bottom: 4px;
+`;
+Tt.div`
+  display: flex;
+  gap: 12px;
+  font-size: ${(props) => props.theme?.typography?.small || "var(--resume-size-small, 10pt)"};
+  color: ${(props) => props.theme?.colors?.tertiary || "var(--resume-color-tertiary, #666)"};
+  margin-bottom: 8px;
+`;
+Tt.p`
+  margin: 8px 0;
+  line-height: 1.6;
+`;
+Tt.ul`
+  margin: 8px 0;
+  padding-left: 20px;
+  list-style-type: disc;
+
+  li {
+    margin: 4px 0;
+    line-height: 1.5;
+  }
+`;
+function formatDateRange({
+  startDate,
+  endDate,
+  format = "short",
+  locale = "en-US",
+  numberingSystem,
+  presentLabel
+}) {
+  if (!startDate) return "";
+  const getPresentLabel = () => {
+    if (presentLabel) return presentLabel;
+    const labels = {
+      en: "Present",
+      "en-US": "Present",
+      "en-GB": "Present",
+      fr: "Présent",
+      "fr-FR": "Présent",
+      es: "Presente",
+      "es-ES": "Presente",
+      de: "Heute",
+      "de-DE": "Heute",
+      it: "Presente",
+      "it-IT": "Presente",
+      pt: "Presente",
+      "pt-BR": "Presente",
+      ja: "現在",
+      "ja-JP": "現在",
+      zh: "至今",
+      "zh-CN": "至今",
+      "zh-TW": "至今",
+      ko: "현재",
+      "ko-KR": "현재",
+      ar: "حاضر",
+      "ar-SA": "حاضر"
+    };
+    return labels[locale] || labels[locale.split("-")[0]] || "Present";
+  };
+  const formatDate = (dateStr) => {
+    if (!dateStr) return getPresentLabel();
+    const date = typeof dateStr === "string" ? new Date(dateStr) : dateStr;
+    if (isNaN(date.getTime())) return dateStr;
+    const monthFormats = {
+      short: { month: "short" },
+      long: { month: "long" },
+      numeric: { month: "2-digit" }
+    };
+    const options = {
+      ...monthFormats[format],
+      year: "numeric"
+    };
+    if (numberingSystem) {
+      options.numberingSystem = numberingSystem;
+    }
+    const formatter = new Intl.DateTimeFormat(locale, options);
+    return formatter.format(date);
+  };
+  const start = formatDate(startDate);
+  if (endDate === void 0) {
+    return start;
+  }
+  const end = formatDate(endDate);
+  return `${start} - ${end}`;
+}
+const StyledDateRange = Tt.span`
+  font-size: ${(props) => props.theme?.typography?.small || "var(--resume-size-small, 10pt)"};
+  color: ${(props) => props.theme?.colors?.tertiary || "var(--resume-color-tertiary, #666)"};
+  white-space: nowrap;
+`;
+function DateRange({
+  startDate,
+  endDate,
+  format = "short",
+  locale = "en-US",
+  numberingSystem,
+  presentLabel,
+  className,
+  ...rest
+}) {
+  const formatted = formatDateRange({
+    startDate,
+    endDate,
+    format,
+    locale,
+    numberingSystem,
+    presentLabel
+  });
+  if (!formatted) return null;
+  return /* @__PURE__ */ jsx(
+    StyledDateRange,
+    {
+      className: `resume-date-range ${className || ""}`.trim(),
+      ...rest,
+      children: formatted
+    }
+  );
+}
+const StyledBadge$1 = Tt.span`
+  display: inline-block;
+  padding: ${(props) => {
+  if (props.$size === "sm") return "2px 8px";
+  if (props.$size === "lg") return "6px 16px";
+  return "4px 12px";
+}};
+  border-radius: ${(props) => props.theme?.radius?.sm || "var(--resume-radius-sm, 4px)"};
+  font-size: ${(props) => {
+  if (props.$size === "sm") return "9pt";
+  if (props.$size === "lg") return "11pt";
+  return "10pt";
+}};
+  font-weight: 500;
+  background: ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accentLight || "var(--resume-color-accent-light, #e6f2ff)";
+  }
+  if (props.$variant === "secondary") {
+    return props.theme?.colors?.muted || "var(--resume-color-muted, #f5f5f5)";
+  }
+  return props.theme?.colors?.muted || "var(--resume-color-muted, #f5f5f5)";
+}};
+  color: ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accent || "var(--resume-color-accent, #0066cc)";
+  }
+  return props.theme?.colors?.primary || "var(--resume-color-primary, #000)";
+}};
+
+  @media print {
+    background: ${(props) => props.$variant === "accent" ? "#e6f2ff" : "#f5f5f5"};
+    color: ${(props) => props.$variant === "accent" ? "#0066cc" : "#000"};
+  }
+`;
+function Badge({
+  children,
+  variant = "default",
+  size = "md",
+  className,
+  ...rest
+}) {
+  return /* @__PURE__ */ jsx(
+    StyledBadge$1,
+    {
+      $variant: variant,
+      $size: size,
+      className: `resume-badge resume-badge-${variant} ${className || ""}`.trim(),
+      ...rest,
+      children
+    }
+  );
+}
+const BadgeContainer = Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+`;
+function BadgeList({
+  children,
+  items,
+  variant = "default",
+  size = "md",
+  className,
+  ...rest
+}) {
+  const content = items ? items.map((item, index) => /* @__PURE__ */ jsx(Badge, { variant, size, children: item }, index)) : children;
+  return /* @__PURE__ */ jsx(
+    BadgeContainer,
+    {
+      className: `resume-badge-list ${className || ""}`.trim(),
+      ...rest,
+      children: content
+    }
+  );
+}
+function safeUrl(url) {
+  if (!url || typeof url !== "string") {
+    return null;
+  }
+  const trimmed = url.trim();
+  const dangerousProtocols = /^(javascript|data|vbscript|file|about):/i;
+  if (dangerousProtocols.test(trimmed)) {
+    return null;
+  }
+  const safeProtocols = /^(https?|mailto|tel|sms|ftp):/i;
+  if (safeProtocols.test(trimmed)) {
+    return trimmed;
+  }
+  if (trimmed.startsWith("/") || trimmed.startsWith(".")) {
+    return trimmed;
+  }
+  if (/^www\./i.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+  if (/^[a-z0-9][a-z0-9.-]+\.[a-z]{2,}$/i.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+  return trimmed;
+}
+function isExternalUrl(url, currentOrigin = null) {
+  if (!url || typeof url !== "string") {
+    return false;
+  }
+  if (url.startsWith("/") || url.startsWith(".") || url.startsWith("#")) {
+    return false;
+  }
+  if (/^(mailto|tel|sms):/i.test(url)) {
+    return false;
+  }
+  if (!currentOrigin && typeof window !== "undefined") {
+    currentOrigin = window.location.origin;
+  }
+  if (!currentOrigin) {
+    return true;
+  }
+  try {
+    const urlObj = new URL(url, currentOrigin);
+    return urlObj.origin !== currentOrigin;
+  } catch (e) {
+    return true;
+  }
+}
+const ContactContainer = Tt.div`
+  display: flex;
+  justify-content: center;
+  gap: ${(props) => props.theme?.spacing?.small || "var(--resume-space-small, 12px)"};
+  flex-wrap: wrap;
+  font-size: ${(props) => props.theme?.typography?.small || "var(--resume-size-small, 10pt)"};
+  color: ${(props) => props.theme?.colors?.text || "var(--resume-color-text, #333)"};
+
+  a {
+    color: ${(props) => props.theme?.colors?.link || "var(--resume-color-link, #0066cc)"};
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+const ContactItem = Tt.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+`;
+const Separator = Tt.span`
+  color: ${(props) => props.theme?.colors?.muted || "var(--resume-color-muted, #999)"};
+`;
+function ContactInfo({ basics = {}, separator = "•", className }) {
+  const { email, phone, url, location, profiles = [] } = basics;
+  const items = [];
+  if (email) {
+    items.push(
+      /* @__PURE__ */ jsx(ContactItem, { children: /* @__PURE__ */ jsx("a", { href: safeUrl(`mailto:${email}`), "aria-label": "Email", children: email }) }, "email")
+    );
+  }
+  if (phone) {
+    items.push(
+      /* @__PURE__ */ jsx(ContactItem, { children: /* @__PURE__ */ jsx("a", { href: safeUrl(`tel:${phone}`), "aria-label": "Phone", children: phone }) }, "phone")
+    );
+  }
+  if (location) {
+    const locationStr = [location.city, location.region, location.countryCode].filter(Boolean).join(", ");
+    if (locationStr) {
+      items.push(
+        /* @__PURE__ */ jsx(ContactItem, { "aria-label": "Location", children: locationStr }, "location")
+      );
+    }
+  }
+  if (url) {
+    const displayUrl = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    items.push(
+      /* @__PURE__ */ jsx(ContactItem, { children: /* @__PURE__ */ jsx(
+        "a",
+        {
+          href: safeUrl(url),
+          target: "_blank",
+          rel: "noopener noreferrer",
+          "aria-label": "Website",
+          children: displayUrl
+        }
+      ) }, "url")
+    );
+  }
+  profiles.forEach((profile, index) => {
+    if (profile.url) {
+      items.push(
+        /* @__PURE__ */ jsx(ContactItem, { children: /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: safeUrl(profile.url),
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "aria-label": profile.network,
+            children: profile.network || profile.username
+          }
+        ) }, `profile-${index}`)
+      );
+    }
+  });
+  if (items.length === 0) return null;
+  return /* @__PURE__ */ jsx(ContactContainer, { className: `resume-contact ${className || ""}`.trim(), children: items.map((item, index) => /* @__PURE__ */ jsxs(t.Fragment, { children: [
+    index > 0 && /* @__PURE__ */ jsx(Separator, { "aria-hidden": "true", children: separator }),
+    item
+  ] }, index)) });
+}
+const StyledLink = Tt.a`
+  color: ${(props) => props.theme?.colors?.link || "var(--resume-color-link, #0066cc)"};
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: ${(props) => props.theme?.colors?.linkVisited || "var(--resume-color-link-visited, #551a8b)"};
+  }
+
+  @media print {
+    color: inherit;
+    text-decoration: underline;
+  }
+`;
+function Link({ href, children, className, ...rest }) {
+  const safeHref = safeUrl(href);
+  if (!safeHref) {
+    return /* @__PURE__ */ jsx("span", { className, children });
+  }
+  const isExternal = isExternalUrl(safeHref);
+  const externalProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  return /* @__PURE__ */ jsx(
+    StyledLink,
+    {
+      href: safeHref,
+      className: `resume-link ${className || ""}`.trim(),
+      ...externalProps,
+      ...rest,
+      children
+    }
+  );
+}
+Tt.span`
+  /* Thin space (U+2009) + pipe + thin space for balanced spacing */
+  &::before {
+    content: '\u2009|\u2009';
+    opacity: 0.5;
+    color: ${(props) => props.$color || "currentColor"};
+    font-weight: normal;
+  }
+
+  /* Ensure consistent spacing across browsers */
+  display: inline;
+  white-space: pre;
+
+  @media print {
+    &::before {
+      content: '\u2009|\u2009';
+      opacity: 0.6;
+    }
+  }
+`;
+Tt.hr`
+  border: none;
+  border-top: 0.5pt solid
+    ${(props) => props.color || props.theme?.colors?.border || "var(--resume-color-border, #e5e7eb)"};
+  margin-left: ${(props) => props.inset || "0"};
+  margin-right: ${(props) => props.inset || "0"};
+  margin-top: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+  margin-bottom: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+
+  @media print {
+    /* Ensure minimum stroke weight for print visibility */
+    border-top-width: 0.3pt;
+    /* Prevent page breaks */
+    page-break-inside: avoid;
+    /* Ensure border renders in all print modes */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.hr`
+  border: none;
+  border-top: ${(props) => props.dotSize || "2px"} dotted
+    ${(props) => props.color || props.theme?.colors?.border || "var(--resume-color-border, #e5e7eb)"};
+  margin-top: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+  margin-bottom: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+
+  /* Override default border-top-width to use fixed spacing */
+  ${(props) => props.spacing && `
+    background-image: radial-gradient(
+      circle,
+      ${props.color || props.theme?.colors?.border || "var(--resume-color-border, #e5e7eb)"} ${props.dotSize || "2px"},
+      transparent ${props.dotSize || "2px"}
+    );
+    background-size: ${props.spacing} 1px;
+    background-repeat: repeat-x;
+    background-position: center;
+    border: none;
+    height: 1px;
+  `}
+
+  @media print {
+    /* Ensure dots render in all print modes */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Prevent page breaks */
+    page-break-inside: avoid;
+    /* Fixed dot rendering for PDF generation */
+    border-top-width: ${(props) => props.dotSize || "2px"};
+  }
+`;
+Tt.div`
+  position: absolute;
+  ${(props) => props.position === "right" ? "right: 0;" : "left: 0;"}
+  top: ${(props) => props.top || "0"};
+  width: ${(props) => props.width || "4mm"};
+  max-width: 6mm; /* ATS-safe maximum */
+  height: ${(props) => props.height || "100%"};
+  background-color: ${(props) => props.color || props.theme?.colors?.accent || "var(--resume-color-accent, #2563eb)"};
+  pointer-events: none; /* Prevent interaction */
+
+  @media print {
+    /* Ensure color renders in print */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Prevent page breaks inside stripe */
+    page-break-inside: avoid;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Reduce width on mobile */
+    width: ${(props) => props.width ? `calc(${props.width} * 0.75)` : "3mm"};
+  }
+`;
+Tt.div`
+  width: ${(props) => props.width || "30%"};
+  max-width: 40%; /* Design constraint: max 40% */
+  min-width: 25%; /* Design constraint: min 25% */
+  height: ${(props) => props.thickness || "2.5pt"};
+  background-color: ${(props) => props.color || props.theme?.colors?.accent || "var(--resume-color-accent, #2563eb)"};
+  margin-bottom: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+  margin-left: ${(props) => {
+  if (props.align === "center") return "auto";
+  if (props.align === "right") return "auto";
+  return "0";
+}};
+  margin-right: ${(props) => {
+  if (props.align === "center") return "auto";
+  if (props.align === "right") return "0";
+  return "auto";
+}};
+
+  @media print {
+    /* Ensure color renders in print */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Prevent page breaks */
+    page-break-inside: avoid;
+    /* Ensure minimum thickness for print visibility */
+    min-height: 2pt;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Increase width slightly on mobile for better visibility */
+    width: ${(props) => props.width ? `calc(${props.width} * 1.2)` : "36%"};
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+  margin-bottom: ${(props) => props.theme?.spacing?.tight || "var(--resume-space-tight, 0.5rem)"};
+
+  @media print {
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  width: 100%;
+  height: ${(props) => props.thickness || "0.4pt"};
+  background-color: ${(props) => props.color || props.theme?.colors?.border || "var(--resume-color-border, #e5e7eb)"};
+  margin-bottom: ${(props) => props.gapSize};
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    /* Ensure minimum stroke weight for print visibility */
+    min-height: 0.3pt;
+    /* Ensure color renders in print */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: ${(props) => props.$columns === 1 ? "1fr" : `repeat(${props.$columns}, 1fr)`};
+  gap: ${(props) => props.$gap || "var(--resume-column-gap)"};
+  margin-bottom: ${(props) => props.$spacing || "var(--resume-space-section)"};
+
+  @media print {
+    gap: ${(props) => props.$gap || "16px"};
+    page-break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: ${(props) => props.$sidebarPosition === "right" ? `1fr ${props.$sidebarWidth || "30%"}` : `${props.$sidebarWidth || "30%"} 1fr`};
+  gap: ${(props) => props.$gap || "var(--resume-column-gap)"};
+
+  @media print {
+    gap: ${(props) => props.$gap || "16px"};
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+Tt.aside`
+  grid-area: ${(props) => props.$position === "right" ? "1 / 2" : "1 / 1"};
+
+  @media (max-width: 768px) {
+    grid-area: auto;
+  }
+`;
+Tt.main`
+  grid-area: ${(props) => props.$sidebarPosition === "right" ? "1 / 1" : "1 / 2"};
+
+  @media (max-width: 768px) {
+    grid-area: auto;
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) => props.$spacing || "var(--resume-space-item)"};
+
+  @media print {
+    gap: ${(props) => props.$spacing || "12px"};
+  }
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(${(props) => props.$minCardWidth || "250px"}, 1fr)
+  );
+  gap: ${(props) => props.$gap || "var(--resume-space-item)"};
+  margin-bottom: ${(props) => props.$spacing || "var(--resume-space-section)"};
+
+  @media print {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: ${(props) => props.$gap || "12px"};
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-direction: ${(props) => props.$direction || "row"};
+  justify-content: ${(props) => props.$justify || "flex-start"};
+  align-items: ${(props) => props.$align || "stretch"};
+  flex-wrap: ${(props) => props.$wrap ? "wrap" : "nowrap"};
+  gap: ${(props) => props.$gap || "var(--resume-space-tight)"};
+
+  @media print {
+    gap: ${(props) => props.$gap || "8px"};
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: ${(props) => props.$responsiveDirection || props.$direction === "row" ? "column" : props.$direction};
+  }
+`;
+Tt.div`
+  /* Use CSS columns for visual two-column layout */
+  column-count: 2;
+  column-gap: ${(props) => props.$columnGap || "16px"};
+
+  /* Prevent column breaks inside items */
+  & > * {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: ${(props) => props.$gap || "8px"};
+    display: block;
+  }
+
+  /* Last item in each column shouldn't have bottom margin */
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    column-count: 2;
+    column-gap: 12pt;
+
+    & > * {
+      margin-bottom: 6pt;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  }
+
+  /* Collapse to single column on small screens */
+  @media (max-width: 768px) {
+    column-count: 1;
+    column-gap: 0;
+
+    & > * {
+      margin-bottom: ${(props) => props.$gap || "8px"};
+    }
+  }
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+`;
+Tt.div`
+  width: 100%;
+  height: ${(props) => props.$height || "8px"};
+  background-color: var(--resume-color-border);
+  border-radius: var(--resume-radius-sm);
+  overflow: hidden;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  width: ${(props) => props.$level}%;
+  height: 100%;
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  transition: width 0.3s ease;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.span`
+  display: inline-block;
+  padding: ${(props) => props.$size === "small" ? "4px 8px" : "6px 12px"};
+  margin: 4px;
+  background-color: ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "var(--resume-color-background)"};
+  color: ${(props) => props.$variant === "filled" ? "#ffffff" : "var(--resume-color-primary)"};
+  border: ${(props) => props.$variant === "outlined" ? "1px solid var(--resume-color-border)" : "none"};
+  border-radius: ${(props) => props.$rounded ? "999px" : "var(--resume-radius-sm)"};
+  font-size: ${(props) => props.$size === "small" ? "var(--resume-size-small)" : "var(--resume-size-body)"};
+  font-weight: var(--resume-weight-medium);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 2px;
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  gap: var(--resume-space-tight);
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.span`
+  flex: 1;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+`;
+Tt.div`
+  display: flex;
+  gap: 4px;
+`;
+Tt.span`
+  width: ${(props) => props.$size || "10px"};
+  height: ${(props) => props.$size || "10px"};
+  border-radius: 50%;
+  background-color: ${(props) => props.$filled ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-item);
+`;
+Tt.h4`
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-semibold);
+  color: var(--resume-color-primary);
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
+Tt.span`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+
+  &:not(:last-child)::after {
+    content: '${(props) => props.$separator || "•"}';
+    margin-left: 6px;
+    color: var(--resume-color-border);
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+`;
+Tt.span`
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: ${(props) => {
+  if (props.$weight >= 80) return "var(--resume-size-subheading)";
+  if (props.$weight >= 50) return "var(--resume-size-body)";
+  return "var(--resume-size-small)";
+}};
+  font-weight: ${(props) => props.$weight >= 70 ? "var(--resume-weight-semibold)" : "var(--resume-weight-normal)"};
+  color: var(--resume-color-primary);
+  background-color: ${(props) => `color-mix(in srgb, var(--resume-color-accent) ${props.$weight}%, transparent)`};
+  border-radius: var(--resume-radius-sm);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-item);
+`;
+Tt.h4`
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-semibold);
+  color: var(--resume-color-primary);
+  margin-bottom: var(--resume-space-tight);
+  border-bottom: 1px solid var(--resume-color-border);
+  padding-bottom: 4px;
+`;
+Tt.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+Tt.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+`;
+Tt.span`
+  flex: 1;
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-accent);
+  font-weight: var(--resume-weight-medium);
+`;
+Tt.div`
+  position: relative;
+  margin-bottom: var(--resume-space-section);
+
+  @media print {
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  position: relative;
+  padding-left: ${(props) => props.$showLine ? "32px" : "0"};
+  margin-bottom: var(--resume-space-item);
+
+  ${(props) => props.$showLine && `
+    &::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      bottom: -16px;
+      width: 2px;
+      background-color: var(--resume-color-border);
+    }
+
+    &:last-child::before {
+      display: none;
+    }
+  `}
+
+  @media print {
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: ${(props) => props.$size || "16px"};
+  height: ${(props) => props.$size || "16px"};
+  border-radius: 50%;
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  border: 2px solid var(--resume-color-background);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-direction: column;
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+`;
+Tt.h3`
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-semibold);
+  color: var(--resume-color-primary);
+  margin: 0;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--resume-space-item, 12pt);
+
+  @media print {
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: ${(props) => props.$lineColor || "var(--resume-color-border, #ddd)"};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-left: 20px;
+`;
+Tt.div`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: ${(props) => props.$width || "8px"};
+  height: ${(props) => {
+  const height = props.$height || "2pt";
+  const value = parseFloat(height);
+  const unit = height.replace(/[\d.]/g, "");
+  return value < 2 && unit === "pt" ? "2pt" : height;
+}};
+  background-color: ${(props) => props.$color || "var(--resume-color-border, #ddd)"};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    min-height: 2pt; /* Ensure visibility in print */
+  }
+`;
+Tt.span`
+  font-size: var(--resume-size-small, 10pt);
+  color: var(--resume-color-secondary, #666);
+  font-weight: var(--resume-weight-normal, 400);
+  white-space: nowrap;
+  flex-shrink: 0;
+`;
+Tt.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+`;
+Tt.span`
+  font-size: var(--resume-size-body, 11pt);
+  color: var(--resume-color-primary, #000);
+  font-weight: var(--resume-weight-medium, 500);
+`;
+Tt.span`
+  font-size: var(--resume-size-small, 10pt);
+  color: var(--resume-color-tertiary, #999);
+`;
+Tt.span`
+  font-size: var(--resume-size-small, 10pt);
+  color: var(--resume-color-secondary, #666);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums; /* Consistent number width */
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.span`
+  font-weight: var(--resume-weight-normal, 400);
+`;
+Tt.span`
+  /* En dash with narrow no-break spaces for proper typography */
+  margin: 0;
+  padding: 0;
+`;
+Tt.img`
+  width: ${(props) => props.$size || "80px"};
+  height: ${(props) => props.$size || "80px"};
+  border-radius: ${(props) => props.$rounded ? "50%" : "var(--resume-radius-md)"};
+  object-fit: cover;
+  border: ${(props) => props.$border ? `2px solid var(--resume-color-border)` : "none"};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  width: ${(props) => props.$size || "80px"};
+  height: ${(props) => props.$size || "80px"};
+  border-radius: ${(props) => props.$rounded ? "50%" : "var(--resume-radius-md)"};
+  background-color: var(--resume-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(${(props) => props.$size || "80px"} / 2);
+  color: var(--resume-color-secondary);
+  font-weight: var(--resume-weight-semibold);
+`;
+Tt.div`
+  display: flex;
+  flex-direction: ${(props) => props.$direction || "column"};
+  align-items: ${(props) => props.$direction === "row" ? "center" : "flex-start"};
+  gap: var(--resume-space-item);
+  padding: var(--resume-space-item);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  margin-bottom: var(--resume-space-section);
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  flex: 1;
+`;
+Tt.h1`
+  font-size: var(--resume-size-name);
+  font-weight: var(--resume-weight-bold);
+  color: var(--resume-color-primary);
+  margin: 0 0 4px 0;
+`;
+Tt.h2`
+  font-size: var(--resume-size-heading);
+  font-weight: var(--resume-weight-normal);
+  color: var(--resume-color-secondary);
+  margin: 0 0 var(--resume-space-tight) 0;
+`;
+Tt.p`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+  margin: 0;
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--resume-space-tight);
+  margin-bottom: var(--resume-space-section);
+
+  @media print {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+`;
+Tt.span`
+  color: var(--resume-color-accent);
+`;
+Tt.a`
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--resume-color-accent);
+  }
+
+  @media print {
+    color: var(--resume-color-secondary);
+  }
+`;
+Tt.div`
+  display: flex;
+  gap: var(--resume-space-tight);
+  flex-wrap: wrap;
+`;
+Tt.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+  text-decoration: none;
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-sm);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--resume-color-accent);
+    color: #ffffff;
+    border-color: var(--resume-color-accent);
+  }
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    color: var(--resume-color-primary);
+  }
+`;
+Tt.span`
+  display: inline-flex;
+`;
+Tt.h1`
+  font-size: ${(props) => {
+  const sizes = {
+    1: "var(--resume-size-name)",
+    2: "var(--resume-size-heading)",
+    3: "var(--resume-size-subheading)",
+    4: "var(--resume-size-body)"
+  };
+  return sizes[props.$level] || sizes[2];
+}};
+  font-weight: ${(props) => props.$weight || "var(--resume-weight-semibold)"};
+  color: ${(props) => props.$color || "var(--resume-color-primary)"};
+  margin: 0 0 ${(props) => props.$spacing || "var(--resume-space-tight)"} 0;
+  line-height: var(--resume-line-height-tight);
+`;
+Tt.p`
+  font-size: ${(props) => props.$size || "var(--resume-size-body)"};
+  font-weight: ${(props) => props.$weight || "var(--resume-weight-normal)"};
+  color: ${(props) => props.$color || "var(--resume-color-secondary)"};
+  line-height: ${(props) => props.$lineHeight || "var(--resume-line-height-normal)"};
+  margin: 0 0 ${(props) => props.$spacing || "0"} 0;
+`;
+Tt.span`
+  display: inline-block;
+  font-size: var(--resume-size-small);
+  font-weight: ${(props) => props.$weight || "var(--resume-weight-medium)"};
+  color: ${(props) => props.$color || "var(--resume-color-secondary)"};
+  text-transform: ${(props) => props.$uppercase ? "uppercase" : "none"};
+  letter-spacing: ${(props) => props.$uppercase ? "0.05em" : "normal"};
+`;
+Tt.p`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-normal);
+  color: ${(props) => props.$color || "var(--resume-color-secondary)"};
+  line-height: var(--resume-line-height-relaxed);
+  margin: 0 0 var(--resume-space-item) 0;
+  max-width: ${(props) => props.$maxWidth || "100%"};
+
+  /* Softer appearance for intro text */
+  opacity: 0.95;
+
+  /* Print optimization - maintain readability */
+  @media print {
+    line-height: var(--resume-line-height-normal);
+    opacity: 1;
+    page-break-inside: avoid;
+  }
+`;
+Tt.blockquote`
+  margin: 0 0 var(--resume-space-item) 0;
+  padding: 2px 0 2px ${(props) => props.$paddingLeft || "16px"};
+  border-left: ${(props) => props.$borderWidth || "3px"} solid
+    ${(props) => props.$accentColor || "var(--resume-color-accent)"};
+
+  font-size: var(--resume-size-body);
+  font-style: ${(props) => props.$fontStyle || "italic"};
+  font-weight: var(--resume-weight-normal);
+  color: var(--resume-color-primary);
+  line-height: var(--resume-line-height-normal);
+
+  /* Prevent quote clipping with subtle padding */
+  padding-right: 2px;
+
+  /* Single-line constraint */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Print optimization */
+  @media print {
+    page-break-inside: avoid;
+    color: #000;
+    border-left-color: ${(props) => props.$accentColor || "#000"};
+  }
+`;
+Tt.p`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-normal);
+  color: ${(props) => props.$color || "var(--resume-color-secondary)"};
+  line-height: var(--resume-line-height-normal);
+  text-align: ${(props) => props.$textAlign || "left"};
+  margin: 0 0 var(--resume-space-tight) 0;
+
+  /* Enable hyphenation for better text flow */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+
+  /* Prevent orphans and widows */
+  orphans: 2;
+  widows: 2;
+
+  /* Balanced text wrapping */
+  text-wrap: balance;
+
+  /* Optional line clamping */
+  ${(props) => props.$maxLines && `
+    display: -webkit-box;
+    -webkit-line-clamp: ${props.$maxLines};
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  `}
+
+  /* Print optimization - disable hyphenation for cleaner output */
+  @media print {
+    hyphens: none;
+    -webkit-hyphens: none;
+    page-break-inside: avoid;
+    text-wrap: pretty;
+  }
+`;
+Tt.div`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+`;
+Tt.svg`
+  transform: rotate(-90deg);
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  font-weight: var(--resume-weight-medium);
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  text-align: ${(props) => props.$align || "left"};
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  font-size: ${(props) => props.$size || "var(--resume-size-name)"};
+  font-weight: var(--resume-weight-bold);
+  color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  line-height: 1;
+  margin-bottom: 4px;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  margin-top: 4px;
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+`;
+Tt.span`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+  font-weight: var(--resume-weight-medium);
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-accent);
+  font-weight: var(--resume-weight-semibold);
+`;
+Tt.div`
+  width: 100%;
+  height: ${(props) => props.$height || "24px"};
+  background-color: var(--resume-color-border);
+  border-radius: var(--resume-radius-sm);
+  overflow: hidden;
+  position: relative;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  width: ${(props) => props.$percentage}%;
+  height: 100%;
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  transition: width 0.3s ease;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: #ffffff;
+  font-weight: var(--resume-weight-medium);
+  white-space: nowrap;
+`;
+Tt.strong`
+  font-weight: ${(props) => {
+  if (props.$size === "sm") return "var(--resume-weight-semibold, 600)";
+  if (props.$size === "lg") return "var(--resume-weight-extrabold, 800)";
+  return "var(--resume-weight-bold, 700)";
+}};
+  font-size: ${(props) => {
+  if (props.$size === "sm") return "0.95em";
+  if (props.$size === "lg") return "1.1em";
+  return "1em";
+}};
+  color: inherit;
+  white-space: nowrap;
+
+  @media print {
+    font-weight: ${(props) => {
+  if (props.$size === "sm") return "600";
+  if (props.$size === "lg") return "800";
+  return "700";
+}};
+    color: inherit;
+  }
+`;
+Tt.li`
+  display: flex;
+  align-items: baseline;
+  margin-bottom: ${(props) => props.$spacing === "tight" ? "4px" : "8px"};
+  line-height: 1.5;
+  list-style: none;
+
+  @media print {
+    page-break-inside: avoid;
+  }
+`;
+Tt.span`
+  font-weight: var(--resume-weight-bold, 700);
+  color: var(--resume-color-primary, #000);
+  min-width: ${(props) => props.$align === "right" ? "auto" : "60px"};
+  max-width: ${(props) => props.$align === "right" ? "80px" : "auto"};
+  margin-right: ${(props) => props.$align === "right" ? "12px" : "0"};
+  margin-left: ${(props) => props.$align === "right" ? "0" : "12px"};
+  text-align: ${(props) => props.$align === "right" ? "right" : "left"};
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  ${(props) => props.$align === "right" ? `
+    order: -1;
+  ` : ""}
+
+  @media print {
+    font-weight: 700;
+    color: #000;
+  }
+`;
+Tt.span`
+  flex: 1;
+  color: var(--resume-color-primary, #000);
+`;
+Tt.span`
+  margin-right: 8px;
+  color: var(--resume-color-accent, #0066cc);
+  font-weight: var(--resume-weight-bold, 700);
+
+  @media print {
+    color: #333;
+  }
+`;
+Tt.ul`
+  margin: 8px 0;
+  padding-left: 0;
+  list-style: none;
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${(props) => props.$gap || "8px"};
+  align-items: center;
+  margin: ${(props) => props.$margin || "8px 0"};
+
+  @media print {
+    gap: 6px;
+  }
+`;
+Tt.span`
+  display: inline-flex;
+  align-items: center;
+  padding: ${(props) => {
+  if (props.$size === "xs") return "2px 8px";
+  if (props.$size === "md") return "4px 12px";
+  return "3px 10px";
+}};
+  border-radius: ${(props) => props.theme?.radius?.full || "var(--resume-radius-full, 999px)"};
+  border: 1px solid
+    ${(props) => props.theme?.colors?.border || "var(--resume-color-border, #ddd)"};
+  background: transparent;
+  font-size: ${(props) => {
+  if (props.$size === "xs") return "8pt";
+  if (props.$size === "md") return "10pt";
+  return "9pt";
+}};
+  font-weight: ${(props) => props.theme?.typography?.weightMedium || "var(--resume-weight-medium, 500)"};
+  color: ${(props) => props.theme?.colors?.secondary || "var(--resume-color-secondary, #333)"};
+  white-space: nowrap;
+  line-height: 1.2;
+
+  @media print {
+    border: 1px solid #ccc;
+    background: transparent;
+    color: #000;
+    padding: ${(props) => {
+  if (props.$size === "xs") return "2px 6px";
+  if (props.$size === "md") return "3px 10px";
+  return "2px 8px";
+}};
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.span`
+  color: ${(props) => props.theme?.colors?.border || "var(--resume-color-border, #ddd)"};
+  font-size: ${(props) => {
+  if (props.$size === "xs") return "8pt";
+  if (props.$size === "md") return "10pt";
+  return "9pt";
+}};
+  user-select: none;
+
+  @media print {
+    color: #ccc;
+  }
+`;
+Tt.span`
+  display: inline;
+  font-size: ${(props) => {
+  if (props.$size === "xs") return "9pt";
+  if (props.$size === "md") return "11pt";
+  return "10pt";
+}};
+  color: ${(props) => props.theme?.colors?.secondary || "var(--resume-color-secondary, #333)"};
+  line-height: 1.5;
+
+  @media print {
+    color: #333;
+  }
+`;
+Tt.span`
+  display: inline;
+  white-space: normal;
+`;
+Tt.span`
+  font-weight: ${(props) => props.theme?.typography?.weightMedium || "var(--resume-weight-medium, 500)"};
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+
+  @media print {
+    font-weight: 500;
+    color: #000;
+  }
+`;
+Tt.span`
+  /* Prevent wrap between key and colon */
+  white-space: nowrap;
+
+  &::after {
+    content: ':';
+    margin-right: 0.25em;
+  }
+`;
+Tt.span`
+  /* Prevent wrap immediately after colon */
+  display: inline-block;
+  color: inherit;
+`;
+Tt.span`
+  &::before {
+    content: ', ';
+    white-space: pre;
+  }
+`;
+Tt.hr`
+  width: 100%;
+  height: ${(props) => props.$thickness || "1px"};
+  background-color: ${(props) => props.$color || "var(--resume-color-border)"};
+  border: none;
+  margin: ${(props) => props.$spacing || "var(--resume-space-item)"} 0;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  width: ${(props) => props.$width || "100%"};
+  height: ${(props) => props.$height || "var(--resume-space-item)"};
+  flex-shrink: 0;
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  margin-bottom: var(--resume-space-item);
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--resume-space-tight);
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+Tt.h3`
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-semibold);
+  color: var(--resume-color-primary);
+  margin: 0;
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-accent);
+  font-weight: var(--resume-weight-medium);
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.p`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+  margin: 0;
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--resume-space-item);
+  margin-bottom: var(--resume-space-section);
+
+  @media print {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+
+  @media print {
+    break-inside: avoid;
+  }
+`;
+Tt.h4`
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-semibold);
+  color: var(--resume-color-primary);
+  margin: 0 0 4px 0;
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-accent);
+  margin-bottom: 4px;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+Tt.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--resume-color-border);
+  gap: var(--resume-space-tight);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media print {
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  flex: 1;
+`;
+Tt.span`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.span`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+
+  &::before {
+    content: ' at ';
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  white-space: nowrap;
+`;
+Tt.header`
+  text-align: center;
+  margin-bottom: var(--resume-space-section);
+
+  @media print {
+    break-after: avoid;
+  }
+`;
+Tt.h1`
+  font-size: var(--resume-size-name);
+  font-weight: var(--resume-weight-bold);
+  color: var(--resume-color-primary);
+  margin: 0 0 4px 0;
+`;
+Tt.h2`
+  font-size: var(--resume-size-heading);
+  font-weight: var(--resume-weight-normal);
+  color: var(--resume-color-secondary);
+  margin: 0 0 var(--resume-space-item) 0;
+`;
+Tt.div`
+  display: flex;
+  justify-content: center;
+  gap: var(--resume-space-tight);
+  flex-wrap: wrap;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+`;
+Tt.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--resume-space-section);
+  gap: var(--resume-space-item);
+
+  @media print {
+    break-after: avoid;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+Tt.div`
+  flex: 1;
+`;
+Tt.h1`
+  font-size: var(--resume-size-name);
+  font-weight: var(--resume-weight-bold);
+  color: var(--resume-color-primary);
+  margin: 0 0 4px 0;
+`;
+Tt.h2`
+  font-size: var(--resume-size-heading);
+  font-weight: var(--resume-weight-normal);
+  color: var(--resume-color-secondary);
+  margin: 0;
+`;
+Tt.div`
+  text-align: right;
+
+  @media (max-width: 768px) {
+    text-align: left;
+  }
+`;
+Tt.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--resume-space-item);
+  border-bottom: 2px solid var(--resume-color-border);
+  margin-bottom: var(--resume-space-section);
+  gap: var(--resume-space-item);
+
+  @media print {
+    border-bottom: 2px solid var(--resume-color-border);
+    break-after: avoid;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+Tt.h1`
+  font-size: var(--resume-size-heading);
+  font-weight: var(--resume-weight-bold);
+  color: var(--resume-color-primary);
+  margin: 0;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.div`
+  position: ${(props) => props.$position === "absolute" ? "absolute" : "relative"};
+  ${(props) => props.$corner === "top-left" && "top: 0; left: 0;"}
+  ${(props) => props.$corner === "top-right" && "top: 0; right: 0;"}
+  ${(props) => props.$corner === "bottom-left" && "bottom: 0; left: 0;"}
+  ${(props) => props.$corner === "bottom-right" && "bottom: 0; right: 0;"}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.$size || "48px"};
+  height: ${(props) => props.$size || "48px"};
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  font-family: ${(props) => props.$serif ? 'Georgia, "Times New Roman", serif' : "inherit"};
+  font-size: ${(props) => props.$fontSize || "calc(var(--resume-size-heading) * 0.8)"};
+  font-weight: ${(props) => props.$outline ? "var(--resume-weight-normal)" : "var(--resume-weight-bold)"};
+  color: ${(props) => props.$color || "var(--resume-color-primary)"};
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: ${(props) => props.$outline ? "1px" : "0"};
+
+  ${(props) => props.$outline && `
+    -webkit-text-stroke: 1px ${props.$color || "var(--resume-color-primary)"};
+    -webkit-text-fill-color: transparent;
+    text-stroke: 1px ${props.$color || "var(--resume-color-primary)"};
+    text-fill-color: transparent;
+  `}
+
+  ${(props) => props.$bordered && `
+    border: 2px solid ${props.$color || "var(--resume-color-primary)"};
+    border-radius: ${props.$rounded ? "50%" : "var(--resume-radius-sm)"};
+    padding: ${props.$padding || "8px"};
+    width: ${props.$size || "48px"};
+    height: ${props.$size || "48px"};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `}
+
+  @media print {
+    ${(props) => props.$outline && `
+      color: ${props.$color || "var(--resume-color-primary)"};
+      -webkit-text-stroke: none;
+      -webkit-text-fill-color: ${props.$color || "var(--resume-color-primary)"};
+      font-weight: var(--resume-weight-normal);
+    `}
+  }
+`;
+Tt.footer`
+  margin-top: var(--resume-space-section);
+  padding-top: var(--resume-space-item);
+  border-top: 1px solid var(--resume-color-border);
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  text-align: ${(props) => props.$align || "center"};
+
+  @media print {
+    border-top: 1px solid var(--resume-color-border);
+    position: running(footer);
+  }
+`;
+Tt.span`
+  @media print {
+    &::after {
+      content: counter(page);
+    }
+  }
+`;
+Tt.div`
+  @media print {
+    page-break-before: ${(props) => props.$before ? "always" : "auto"};
+    page-break-after: ${(props) => props.$after ? "always" : "auto"};
+    break-before: ${(props) => props.$before ? "page" : "auto"};
+    break-after: ${(props) => props.$after ? "page" : "auto"};
+  }
+
+  @media screen {
+    display: none;
+  }
+`;
+Tt.header`
+  text-align: center;
+  margin-bottom: var(--resume-space-section, 24px);
+
+  @media print {
+    break-after: avoid;
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-small, 10px);
+  font-weight: var(--resume-weight-medium, 500);
+  color: var(--resume-color-secondary, #4a4a4a);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--resume-space-tight, 8px);
+
+  @media print {
+    color: #4a4a4a; /* Ensure print visibility */
+  }
+`;
+Tt.h1`
+  font-size: var(--resume-size-name, 36px);
+  font-weight: var(--resume-weight-bold, 700);
+  color: var(--resume-color-primary, #1a1a1a);
+  letter-spacing: -0.02em; /* Subtle negative tracking, avoid excessive spacing */
+  margin: 0 auto;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--resume-color-border, #e5e7eb);
+  max-width: fit-content;
+  line-height: var(--resume-line-height-tight, 1.2);
+
+  /* Ensure 4.5:1 contrast ratio */
+  @media print {
+    color: #000000;
+    border-bottom-color: #999999;
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: var(--resume-size-body, 11px);
+  color: var(--resume-color-secondary, #4a4a4a);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Prevent wrapping to maintain single-line layout */
+  flex-wrap: nowrap;
+
+  @media print {
+    color: #333333; /* Ensure 4.5:1 contrast for print */
+  }
+
+  /* Handle overflow gracefully on very narrow screens */
+  @media (max-width: 480px) {
+    font-size: 10px;
+    gap: 8px;
+  }
+`;
+Tt.span`
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+`;
+Tt.a`
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--resume-color-accent, #2563eb);
+    text-decoration: underline;
+  }
+
+  @media print {
+    color: #333333;
+    text-decoration: none;
+  }
+`;
+Tt.span`
+  color: var(--resume-color-border, #e5e7eb);
+  user-select: none;
+  font-weight: var(--resume-weight-normal, 400);
+
+  @media print {
+    color: #999999;
+  }
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-item, 16px);
+
+  @media print {
+    page-break-after: avoid;
+  }
+`;
+Tt.h2`
+  font-size: var(--resume-size-heading, 16px);
+  font-weight: var(--resume-weight-semibold, 600);
+  color: var(--resume-color-primary, #1a1a1a);
+  margin: 0 0 8px 0;
+  line-height: var(--resume-line-height-tight, 1.2);
+
+  @media print {
+    color: #000000; /* Ensure 4.5:1 contrast */
+  }
+`;
+Tt.hr`
+  width: ${(props) => props.$width || "100%"};
+  height: 0;
+  border: none;
+  border-top: 0.5px solid
+    ${(props) => props.$color || "var(--resume-color-border, #e5e7eb)"};
+  margin: 0;
+
+  /* Ensure visibility in print */
+  @media print {
+    border-top-width: 1px;
+    border-top-color: ${(props) => props.$color || "#cccccc"};
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--resume-space-item, 16px);
+
+  @media print {
+    page-break-after: avoid;
+  }
+`;
+Tt.div`
+  width: ${(props) => props.$width || "4px"};
+  height: 0.7em; /* Match x-height of text, not full line-height */
+  background-color: ${(props) => props.$color || "var(--resume-color-accent, #2563eb)"};
+  border-radius: 2px;
+  flex-shrink: 0;
+
+  /* Ensure visibility in print */
+  @media print {
+    background-color: ${(props) => props.$color || "#000000"};
+  }
+`;
+Tt.h2`
+  font-size: var(--resume-size-heading, 16px);
+  font-weight: var(--resume-weight-semibold, 600);
+  color: var(--resume-color-primary, #1a1a1a);
+  margin: 0;
+  line-height: var(--resume-line-height-tight, 1.2);
+
+  @media print {
+    color: #000000; /* Ensure 4.5:1 contrast */
+  }
+`;
+Tt.header`
+  text-align: ${(props) => props.$align || "center"};
+  margin-bottom: var(--resume-space-section, 24px);
+
+  @media print {
+    break-after: avoid;
+  }
+`;
+Tt.h1`
+  font-size: var(--resume-size-name, 36px);
+  font-weight: var(--resume-weight-bold, 700);
+  color: var(--resume-color-primary, #1a1a1a);
+  margin: 0 0 4px 0;
+  line-height: var(--resume-line-height-tight, 1.2);
+  letter-spacing: -0.02em;
+
+  @media print {
+    color: #000000; /* Ensure 4.5:1 contrast */
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-heading, 16px);
+  font-weight: var(--resume-weight-medium, 500); /* Avoid thin weights */
+  color: var(--resume-color-secondary, #4a4a4a);
+  margin: 0 0 8px 0;
+  line-height: var(--resume-line-height-normal, 1.5);
+
+  @media print {
+    color: #333333; /* Ensure 4.5:1 contrast */
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-body, 11px);
+  font-weight: var(--resume-weight-normal, 400);
+  color: var(--resume-color-secondary, #4a4a4a);
+  margin: 0;
+  line-height: var(--resume-line-height-relaxed, 1.75);
+  max-width: 600px;
+  margin-left: ${(props) => props.$align === "center" ? "auto" : "0"};
+  margin-right: ${(props) => props.$align === "center" ? "auto" : props.$align === "right" ? "0" : "auto"};
+
+  @media print {
+    color: #4a4a4a;
+  }
+`;
+Tt.blockquote`
+  margin: var(--resume-space-section) 0;
+  padding: var(--resume-space-item);
+  border-left: 4px solid var(--resume-color-accent);
+  background-color: var(--resume-color-muted);
+  break-inside: avoid;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border-left: 4px solid var(--resume-color-accent);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.p`
+  font-size: var(--resume-size-subheading);
+  font-style: italic;
+  color: var(--resume-color-primary);
+  line-height: var(--resume-line-height-relaxed);
+  margin: 0 0 var(--resume-space-tight) 0;
+`;
+Tt.footer`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  text-align: right;
+`;
+Tt.cite`
+  font-style: normal;
+  font-weight: var(--resume-weight-medium);
+`;
+Tt.span`
+  display: block;
+  font-size: var(--resume-size-tiny);
+  margin-top: 2px;
+`;
+Tt.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--resume-space-tight);
+  padding: var(--resume-space-item);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  break-inside: avoid;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    padding: var(--resume-space-tight);
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  gap: var(--resume-space-tight);
+`;
+Tt.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+`;
+Tt.div`
+  flex: 1;
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.blockquote`
+  margin: 0;
+  font-size: var(--resume-size-body);
+  font-style: italic;
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.blockquote`
+  margin: var(--resume-space-item) 0;
+  padding: var(--resume-space-tight) var(--resume-space-item);
+  border-left: 3px solid var(--resume-color-border);
+  font-style: italic;
+  color: var(--resume-color-secondary);
+  background-color: ${(props) => props.$highlight ? "var(--resume-color-muted)" : "transparent"};
+  break-inside: avoid;
+
+  @media print {
+    border-left: 3px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.p`
+  margin: 0;
+  font-size: var(--resume-size-body);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.cite`
+  display: block;
+  margin-top: var(--resume-space-tight);
+  font-size: var(--resume-size-small);
+  font-style: normal;
+  color: var(--resume-color-tertiary);
+`;
+Tt.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "var(--resume-color-background)"};
+  color: ${(props) => props.$variant === "filled" ? "white" : "var(--resume-color-primary)"};
+  border: 1px solid
+    ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  border-radius: var(--resume-radius-full);
+  font-size: var(--resume-size-small);
+  font-weight: var(--resume-weight-medium);
+  break-inside: avoid;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid var(--resume-color-border);
+    background-color: ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "transparent"};
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-tiny);
+    padding: 6px 12px;
+  }
+`;
+Tt.span`
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+`;
+Tt.span`
+  white-space: nowrap;
+`;
+Tt.span`
+  opacity: 0.8;
+  font-size: var(--resume-size-tiny);
+  font-weight: var(--resume-weight-normal);
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+  font-size: var(--resume-size-body);
+  line-height: var(--resume-line-height-normal);
+  break-inside: avoid;
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-small);
+  }
+`;
+Tt.span`
+  font-weight: var(--resume-weight-semibold);
+  color: var(--resume-color-primary);
+`;
+Tt.span`
+  color: var(--resume-color-primary);
+`;
+Tt.span`
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  background-color: var(--resume-color-background);
+  padding: 2px 6px;
+  border-radius: var(--resume-radius-sm);
+  border: 1px solid var(--resume-color-border);
+
+  @media print {
+    background-color: transparent;
+    border: 1px solid var(--resume-color-border);
+    padding: 1px 4px;
+  }
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-tertiary);
+  font-style: italic;
+`;
+Tt.a`
+  color: var(--resume-color-accent);
+  text-decoration: none;
+  font-size: var(--resume-size-small);
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media print {
+    color: var(--resume-color-primary);
+    text-decoration: none;
+
+    &::after {
+      content: ' [' attr(href) ']';
+      font-size: var(--resume-size-tiny);
+    }
+  }
+`;
+Tt.span`
+  color: var(--resume-color-tertiary);
+
+  &::before {
+    content: '·';
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  margin-bottom: var(--resume-space-tight);
+  break-inside: avoid;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--resume-space-tight);
+  margin-bottom: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 4px;
+  }
+`;
+Tt.h3`
+  margin: 0;
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.time`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-tertiary);
+  white-space: nowrap;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  margin-bottom: 8px;
+`;
+Tt.p`
+  margin: 0;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+Tt.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--resume-space-tight);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--resume-color-border);
+  break-inside: avoid;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media print {
+    border-bottom: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 4px;
+  }
+`;
+Tt.div`
+  flex: 1;
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  margin-bottom: 2px;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.time`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-tertiary);
+  white-space: nowrap;
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+`;
+Tt.span`
+  font-weight: var(--resume-weight-medium);
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.div`
+  width: 100%;
+  height: 10px;
+  background-color: var(--resume-color-border);
+  border-radius: var(--resume-radius-sm);
+  overflow: hidden;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  width: ${(props) => props.$level}%;
+  height: 100%;
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  transition: width 0.3s ease;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  margin-bottom: 0.5em;
+  font-size: var(--resume-size-body);
+  line-height: var(--resume-line-height-normal);
+  break-inside: avoid;
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-small);
+    gap: 0.5em;
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  flex: 1;
+`;
+Tt.span`
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.span`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.span`
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+  letter-spacing: 2px;
+  white-space: nowrap;
+
+  @media print {
+    letter-spacing: 3px;
+  }
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--resume-space-tight);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media print {
+    break-inside: avoid;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-tight);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-sm);
+  break-inside: avoid;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  margin-bottom: 8px;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+`;
+Tt.div`
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+`;
+Tt.span`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: ${(props) => props.$filled ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid
+      ${(props) => props.$filled ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  gap: var(--resume-space-tight);
+  margin-bottom: 8px;
+`;
+Tt.span`
+  min-width: 120px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+
+  @media (max-width: 768px) {
+    min-width: 100px;
+    font-size: var(--resume-size-small);
+  }
+`;
+Tt.div`
+  display: flex;
+  gap: 4px;
+  flex: 1;
+`;
+Tt.div`
+  flex: 1;
+  height: ${(props) => props.$size || "12px"};
+  background-color: ${(props) => props.$filled ? props.$color || "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  border-radius: var(--resume-radius-xs);
+  transition: background-color 0.3s ease;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid
+      ${(props) => props.$filled ? props.$color || "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  }
+`;
+Tt.span`
+  min-width: 80px;
+  text-align: right;
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-tight) 0;
+  border-bottom: 1px solid var(--resume-color-border);
+  break-inside: avoid;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media print {
+    border-bottom: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--resume-space-tight);
+  margin-bottom: 4px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 4px;
+  }
+`;
+Tt.h3`
+  margin: 0;
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.time`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-tertiary);
+  white-space: nowrap;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  font-style: italic;
+  margin-bottom: 8px;
+`;
+Tt.p`
+  margin: 0;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.a`
+  display: inline-block;
+  margin-top: 8px;
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media print {
+    color: var(--resume-color-primary);
+    text-decoration: none;
+
+    &::after {
+      content: ' (' attr(href) ')';
+      font-size: var(--resume-size-tiny);
+    }
+  }
+`;
+Tt.div`
+  margin-bottom: var(--resume-space-tight);
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+  break-inside: avoid;
+  line-height: var(--resume-line-height-relaxed);
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+const Text = Tt.span`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-primary);
+`;
+Tt(Text)`
+  font-weight: var(--resume-weight-medium);
+`;
+Tt(Text)`
+  color: var(--resume-color-secondary);
+`;
+Tt(Text)`
+  font-style: italic;
+`;
+Tt(Text)`
+  color: var(--resume-color-secondary);
+`;
+Tt.span`
+  margin: 0 0.5em;
+  color: var(--resume-color-tertiary);
+`;
+Tt.a`
+  color: var(--resume-color-accent);
+  text-decoration: none;
+  margin-left: 0.5em;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media print {
+    color: var(--resume-color-primary);
+    text-decoration: none;
+
+    &::after {
+      content: ' [' attr(href) ']';
+      font-size: var(--resume-size-tiny);
+    }
+  }
+`;
+Tt.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--resume-space-item);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media print {
+    break-inside: avoid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--resume-space-tight);
+  }
+`;
+Tt.div`
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  overflow: hidden;
+  break-inside: avoid;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.img`
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+
+  @media print {
+    height: 100px;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-tight);
+`;
+Tt.h3`
+  margin: 0 0 4px 0;
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.p`
+  margin: 0 0 8px 0;
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
+Tt.span`
+  padding: 2px 8px;
+  font-size: var(--resume-size-tiny);
+  background-color: var(--resume-color-muted);
+  color: var(--resume-color-secondary);
+  border-radius: var(--resume-radius-sm);
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    background-color: transparent;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  margin-bottom: var(--resume-space-tight);
+  break-inside: avoid;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--resume-space-tight);
+  margin-bottom: 8px;
+`;
+Tt.h3`
+  margin: 0;
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+`;
+Tt.time`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-tertiary);
+  white-space: nowrap;
+`;
+Tt.p`
+  margin: 0 0 var(--resume-space-tight) 0;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--resume-space-tight);
+`;
+Tt.span`
+  padding: 4px 10px;
+  font-size: var(--resume-size-small);
+  background-color: var(--resume-color-muted);
+  color: var(--resume-color-secondary);
+  border-radius: var(--resume-radius-sm);
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    background-color: transparent;
+  }
+`;
+Tt.div`
+  display: flex;
+  gap: var(--resume-space-tight);
+`;
+Tt.a`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media print {
+    color: var(--resume-color-primary);
+    text-decoration: none;
+
+    &::after {
+      content: ' (' attr(href) ')';
+      font-size: var(--resume-size-tiny);
+    }
+  }
+`;
+Tt.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--resume-size-body);
+  margin: var(--resume-space-item) 0;
+
+  @media print {
+    break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-small);
+  }
+`;
+Tt.thead`
+  background-color: var(--resume-color-muted);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.th`
+  padding: 10px;
+  text-align: left;
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  border: 1px solid var(--resume-color-border);
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.tbody``;
+Tt.tr`
+  &:nth-child(even) {
+    background-color: var(--resume-color-background);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.td`
+  padding: 10px;
+  border: 1px solid var(--resume-color-border);
+  color: var(--resume-color-secondary);
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+Tt.span`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${(props) => {
+  if (props.$level === "expert") return "var(--resume-color-accent)";
+  if (props.$level === "advanced") return "var(--resume-color-success)";
+  if (props.$level === "intermediate") return "var(--resume-color-warning)";
+  return "var(--resume-color-border)";
+}};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 2px solid
+      ${(props) => {
+  if (props.$level === "expert") return "var(--resume-color-accent)";
+  if (props.$level === "advanced") return "var(--resume-color-success)";
+  if (props.$level === "intermediate")
+    return "var(--resume-color-warning)";
+  return "var(--resume-color-border)";
+}};
+  }
+`;
+Tt.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--resume-size-body);
+  margin: var(--resume-space-item) 0;
+
+  @media print {
+    break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-small);
+  }
+`;
+Tt.thead``;
+Tt.th`
+  padding: 12px;
+  text-align: ${(props) => props.$align || "left"};
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  background-color: var(--resume-color-muted);
+  border: 1px solid var(--resume-color-border);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.tbody``;
+Tt.tr`
+  &:nth-child(even) {
+    background-color: var(--resume-color-background);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.td`
+  padding: 10px 12px;
+  border: 1px solid var(--resume-color-border);
+  color: var(--resume-color-secondary);
+  text-align: ${(props) => props.$align || "left"};
+  vertical-align: top;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.td`
+  padding: 10px 12px;
+  border: 1px solid var(--resume-color-border);
+  color: var(--resume-color-primary);
+  font-weight: var(--resume-weight-medium);
+  background-color: var(--resume-color-muted);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--resume-size-body);
+  margin: var(--resume-space-item) 0;
+
+  @media print {
+    break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-small);
+    display: block;
+    overflow-x: auto;
+  }
+`;
+Tt.thead`
+  background-color: var(--resume-color-muted);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.th`
+  padding: 12px;
+  text-align: ${(props) => props.$align || "left"};
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  border: 1px solid var(--resume-color-border);
+  white-space: nowrap;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.tbody``;
+Tt.tr`
+  &:nth-child(even) {
+    background-color: ${(props) => props.$striped ? "var(--resume-color-background)" : "transparent"};
+  }
+
+  &:hover {
+    background-color: var(--resume-color-muted);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+`;
+Tt.td`
+  padding: 10px 12px;
+  border: 1px solid var(--resume-color-border);
+  color: var(--resume-color-secondary);
+  text-align: ${(props) => props.$align || "left"};
+  vertical-align: top;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+  }
+`;
+Tt.tfoot`
+  background-color: var(--resume-color-muted);
+  font-weight: var(--resume-weight-medium);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  margin: var(--resume-space-item) 0;
+  background-color: ${(props) => {
+  if (props.$variant === "success")
+    return "var(--resume-color-success-bg, #d4edda)";
+  if (props.$variant === "warning")
+    return "var(--resume-color-warning-bg, #fff3cd)";
+  if (props.$variant === "error")
+    return "var(--resume-color-error-bg, #f8d7da)";
+  return "var(--resume-color-muted)";
+}};
+  border-left: 4px solid
+    ${(props) => {
+  if (props.$variant === "success")
+    return "var(--resume-color-success, #28a745)";
+  if (props.$variant === "warning")
+    return "var(--resume-color-warning, #ffc107)";
+  if (props.$variant === "error")
+    return "var(--resume-color-error, #dc3545)";
+  return "var(--resume-color-accent)";
+}};
+  border-radius: var(--resume-radius-sm);
+  break-inside: avoid;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border-left: 4px solid
+      ${(props) => {
+  if (props.$variant === "success")
+    return "var(--resume-color-success, #28a745)";
+  if (props.$variant === "warning")
+    return "var(--resume-color-warning, #ffc107)";
+  if (props.$variant === "error")
+    return "var(--resume-color-error, #dc3545)";
+  return "var(--resume-color-accent)";
+}};
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-subheading);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  margin-bottom: 8px;
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.div`
+  display: flex;
+  gap: var(--resume-space-tight);
+  padding: var(--resume-space-tight);
+  background-color: var(--resume-color-background);
+  border: 1px solid var(--resume-color-border);
+  border-radius: var(--resume-radius-md);
+  margin: var(--resume-space-tight) 0;
+  break-inside: avoid;
+
+  @media print {
+    border: 1px solid var(--resume-color-border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  color: white;
+  font-size: 14px;
+  font-weight: var(--resume-weight-bold);
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 2px solid ${(props) => props.$color || "var(--resume-color-accent)"};
+  }
+`;
+Tt.div`
+  flex: 1;
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  font-weight: var(--resume-weight-medium);
+  color: var(--resume-color-primary);
+  margin-bottom: 4px;
+`;
+Tt.div`
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.div`
+  padding: var(--resume-space-item);
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  color: white;
+  border-radius: var(--resume-radius-md);
+  margin: var(--resume-space-item) 0;
+  break-inside: avoid;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 2px solid ${(props) => props.$color || "var(--resume-color-accent)"};
+    background-color: transparent;
+    color: var(--resume-color-primary);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--resume-space-tight);
+  margin-bottom: var(--resume-space-tight);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+`;
+Tt.h3`
+  margin: 0;
+  font-size: var(--resume-size-heading);
+  font-weight: var(--resume-weight-bold);
+  color: inherit;
+
+  @media print {
+    color: var(--resume-color-primary);
+  }
+`;
+Tt.div`
+  padding: 4px 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: var(--resume-radius-full);
+  font-size: var(--resume-size-small);
+  white-space: nowrap;
+
+  @media print {
+    background-color: transparent;
+    border: 1px solid currentColor;
+  }
+`;
+Tt.div`
+  font-size: var(--resume-size-body);
+  line-height: var(--resume-line-height-normal);
+
+  @media print {
+    color: var(--resume-color-secondary);
+  }
+`;
+Tt.div`
+  margin-top: var(--resume-space-tight);
+  padding-top: var(--resume-space-tight);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: var(--resume-size-small);
+
+  @media print {
+    border-top: 1px solid var(--resume-color-border);
+    color: var(--resume-color-tertiary);
+  }
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding: 0;
+  list-style: none;
+`;
+Tt.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  break-inside: avoid;
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.span`
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: ${(props) => props.$checked ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  color: white;
+  font-size: 12px;
+  margin-top: 2px;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 2px solid
+      ${(props) => props.$checked ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  }
+`;
+Tt.span`
+  flex: 1;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+  text-decoration: ${(props) => props.$checked && props.$strikethrough ? "line-through" : "none"};
+  opacity: ${(props) => props.$checked && props.$strikethrough ? 0.7 : 1};
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding: 0;
+  list-style: none;
+`;
+Tt.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 0;
+  break-inside: avoid;
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.span`
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  margin-top: 2px;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.span`
+  flex: 1;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.ol`
+  margin: var(--resume-space-tight) 0;
+  padding-left: 28px;
+  counter-reset: list-counter;
+  list-style: none;
+`;
+Tt.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 0;
+  counter-increment: list-counter;
+  break-inside: avoid;
+
+  &::before {
+    content: counter(list-counter) '.';
+    flex-shrink: 0;
+    width: 24px;
+    font-weight: var(--resume-weight-medium);
+    color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.span`
+  flex: 1;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding-left: 24px;
+  list-style: none;
+`;
+Tt.li`
+  position: relative;
+  padding: 4px 0 4px 16px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+  break-inside: avoid;
+
+  &::before {
+    content: '${(props) => props.$bullet || "•"}';
+    position: absolute;
+    left: 0;
+    color: ${(props) => props.$color || "var(--resume-color-accent)"};
+    font-weight: var(--resume-weight-bold);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+Tt.li`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+  font-size: var(--resume-size-small);
+  color: var(--resume-color-secondary);
+  break-inside: avoid;
+
+  &:not(:last-child) {
+    border-bottom: ${(props) => props.$divider ? "1px solid var(--resume-color-border)" : "none"};
+    padding-bottom: ${(props) => props.$divider ? "6px" : "2px"};
+    margin-bottom: ${(props) => props.$divider ? "6px" : "0"};
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border-bottom: ${(props) => props.$divider ? "1px solid var(--resume-color-border)" : "none"};
+  }
+`;
+Tt.span`
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid ${(props) => props.$color || "var(--resume-color-accent)"};
+  }
+`;
+Tt.span`
+  flex: 1;
+  line-height: 1.4;
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding-left: 20px;
+  list-style: none;
+`;
+Tt.li`
+  position: relative;
+  padding: 2px 0;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: 1.4;
+  break-inside: avoid;
+  orphans: 2;
+  widows: 2;
+  max-height: 4.2em; /* Enforce 2-3 line max (1.4 line-height × 3 lines) */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &::before {
+    content: '${(props) => props.$bullet || "•"}';
+    position: absolute;
+    left: -16px;
+    color: ${(props) => props.$color || "var(--resume-color-accent)"};
+    font-weight: var(--resume-weight-semibold);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.ul`
+  margin: var(--resume-space-comfortable) 0;
+  padding-left: 24px;
+  list-style: none;
+`;
+Tt.li`
+  position: relative;
+  padding: 6px 0; /* 6pt baseline grid */
+  margin-bottom: 8px; /* 8pt baseline grid */
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: 1.6; /* 1.6 × 16px = 25.6px ≈ 26px (multiple of 6pt baseline) */
+  break-inside: avoid;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &::before {
+    content: '${(props) => props.$bullet || "•"}';
+    position: absolute;
+    left: -20px;
+    color: ${(props) => props.$color || "var(--resume-color-accent)"};
+    font-weight: var(--resume-weight-semibold);
+    line-height: inherit;
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding-left: 0;
+  list-style: none;
+`;
+Tt.li`
+  position: relative;
+  padding: 4px 0 4px 20px; /* Left padding for bullet space */
+  text-indent: -20px; /* Negative indent to hang bullet outside */
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+  break-inside: avoid;
+
+  &::before {
+    content: '${(props) => props.$bullet || "•"}';
+    color: ${(props) => props.$color || "var(--resume-color-accent)"};
+    font-weight: var(--resume-weight-semibold);
+    display: inline-block;
+    width: 20px;
+    text-indent: 0; /* Reset indent for bullet */
+  }
+
+  /* Reset text-indent for child elements */
+  > * {
+    text-indent: 0;
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding-left: 0;
+  list-style: none;
+`;
+Tt.li`
+  position: relative;
+  padding: 2px 0 2px 16px;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: 1.5;
+  break-inside: avoid;
+
+  &::before {
+    content: '–'; /* En-dash (U+2013), not hyphen */
+    position: absolute;
+    left: 0;
+    color: ${(props) => props.$color || "var(--resume-color-text)"};
+    font-weight: var(--resume-weight-normal);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.ul`
+  margin: var(--resume-space-tight) 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+`;
+Tt.li`
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+
+  &:not(:last-child)::after {
+    content: '·'; /* Midline dot (U+00B7) */
+    margin-left: 8px;
+    color: ${(props) => props.$color || "var(--resume-color-accent)"};
+    font-weight: var(--resume-weight-semibold);
+  }
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    &:not(:last-child)::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.dl`
+  margin: var(--resume-space-tight) 0;
+  display: grid;
+  grid-template-columns: ${(props) => props.$layout === "inline" ? "auto 1fr" : "1fr"};
+  gap: ${(props) => props.$layout === "inline" ? "8px 16px" : "4px"};
+`;
+Tt.dt`
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-text);
+  font-weight: var(--resume-weight-semibold);
+  line-height: var(--resume-line-height-normal);
+
+  ${(props) => props.$layout === "stacked" && `
+    margin-top: 8px;
+    &:first-child {
+      margin-top: 0;
+    }
+  `}
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.dd`
+  margin: 0;
+  font-size: var(--resume-size-body);
+  color: var(--resume-color-secondary);
+  line-height: var(--resume-line-height-normal);
+
+  ${(props) => props.$layout === "inline" && `
+    display: flex;
+    align-items: baseline;
+  `}
+
+  ${(props) => props.$layout === "stacked" && `
+    margin-left: 16px;
+    &::before {
+      content: '—'; /* Em-dash (U+2014) */
+      margin-right: 8px;
+      color: ${props.$color || "var(--resume-color-accent)"};
+    }
+  `}
+
+  ${(props) => props.$layout === "inline" && `
+    &::before {
+      content: '—'; /* Em-dash (U+2014) */
+      margin: 0 8px;
+      color: ${props.$color || "var(--resume-color-accent)"};
+      flex-shrink: 0;
+    }
+  `}
+
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    &::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.time`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background-color: ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "var(--resume-color-background)"};
+  color: ${(props) => props.$variant === "filled" ? "white" : "var(--resume-color-secondary)"};
+  border: 1px solid
+    ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "var(--resume-color-border)"};
+  border-radius: var(--resume-radius-full);
+  font-size: var(--resume-size-small);
+  white-space: nowrap;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid var(--resume-color-border);
+    background-color: ${(props) => props.$variant === "filled" ? "var(--resume-color-accent)" : "transparent"};
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--resume-size-tiny);
+    padding: 3px 10px;
+  }
+`;
+Tt.span`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+`;
+Tt.time`
+  font-size: ${(props) => props.$size || "var(--resume-size-small)"};
+  color: ${(props) => props.$color || "var(--resume-color-tertiary)"};
+  white-space: nowrap;
+`;
+Tt.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: ${(props) => props.$opacity || 0.05};
+  z-index: 0;
+  background-image: ${(props) => {
+  if (props.$pattern === "dots") {
+    return `radial-gradient(circle, var(--resume-color-primary) 1px, transparent 1px)`;
+  }
+  if (props.$pattern === "grid") {
+    return `
+        linear-gradient(var(--resume-color-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--resume-color-border) 1px, transparent 1px)
+      `;
+  }
+  if (props.$pattern === "diagonal") {
+    return `repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        var(--resume-color-border) 10px,
+        var(--resume-color-border) 11px
+      )`;
+  }
+  return "none";
+}};
+  background-size: ${(props) => {
+  if (props.$pattern === "dots") return "20px 20px";
+  if (props.$pattern === "grid") return "20px 20px";
+  return "auto";
+}};
+
+  @media print {
+    display: none;
+  }
+`;
+Tt.div`
+  padding: var(--resume-space-section);
+  background-color: ${(props) => props.$color || "var(--resume-color-muted)"};
+  border-radius: ${(props) => props.$rounded ? "var(--resume-radius-md)" : "0"};
+  margin: ${(props) => props.$margin || "var(--resume-space-section) 0"};
+  break-inside: avoid;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @media (max-width: 768px) {
+    padding: var(--resume-space-item);
+  }
+`;
+Tt.div`
+  position: relative;
+  z-index: 1;
+`;
+Tt.hr`
+  border: none;
+  margin: ${(props) => props.$spacing || "var(--resume-space-item) 0"};
+  height: ${(props) => {
+  if (props.$variant === "thick") return "3px";
+  if (props.$variant === "gradient") return "2px";
+  return "1px";
+}};
+  background: ${(props) => {
+  if (props.$variant === "gradient") {
+    return `linear-gradient(
+        to right,
+        transparent,
+        ${props.$color || "var(--resume-color-border)"},
+        transparent
+      )`;
+  }
+  if (props.$variant === "dotted") {
+    return `repeating-linear-gradient(
+        to right,
+        ${props.$color || "var(--resume-color-border)"} 0,
+        ${props.$color || "var(--resume-color-border)"} 4px,
+        transparent 4px,
+        transparent 8px
+      )`;
+  }
+  if (props.$variant === "dashed") {
+    return `repeating-linear-gradient(
+        to right,
+        ${props.$color || "var(--resume-color-border)"} 0,
+        ${props.$color || "var(--resume-color-border)"} 12px,
+        transparent 12px,
+        transparent 20px
+      )`;
+  }
+  return props.$color || "var(--resume-color-border)";
+}};
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: ${(props) => props.$color || "var(--resume-color-border)"};
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: ${(props) => props.$spacing || "var(--resume-space-item) 0"};
+  gap: var(--resume-space-tight);
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: ${(props) => props.$color || "var(--resume-color-border)"};
+  }
+
+  @media print {
+    &::before,
+    &::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+`;
+Tt.span`
+  color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  font-size: 16px;
+`;
+Tt.div`
+  position: relative;
+  padding: ${(props) => props.$padding || "var(--resume-space-item)"};
+  border: ${(props) => {
+  const color = props.$color || "var(--resume-color-accent)";
+  if (props.$position === "all") return `2px solid ${color}`;
+  return "none";
+}};
+  border-left: ${(props) => {
+  if (props.$position === "left" || props.$position === "all") {
+    return `4px solid ${props.$color || "var(--resume-color-accent)"}`;
+  }
+  return "none";
+}};
+  border-right: ${(props) => {
+  if (props.$position === "right") {
+    return `4px solid ${props.$color || "var(--resume-color-accent)"}`;
+  }
+  return "none";
+}};
+  border-top: ${(props) => {
+  if (props.$position === "top" || props.$position === "all") {
+    return `4px solid ${props.$color || "var(--resume-color-accent)"}`;
+  }
+  return "none";
+}};
+  border-bottom: ${(props) => {
+  if (props.$position === "bottom" || props.$position === "all") {
+    return `4px solid ${props.$color || "var(--resume-color-accent)"}`;
+  }
+  return "none";
+}};
+  border-radius: ${(props) => props.$rounded ? "var(--resume-radius-md)" : "0"};
+  break-inside: avoid;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: ${(props) => props.$color || "var(--resume-color-accent)"};
+  border-style: solid;
+  border-width: 0;
+
+  ${(props) => {
+  if (props.$corner === "top-left") {
+    return `
+        top: -2px;
+        left: -2px;
+        border-top-width: 3px;
+        border-left-width: 3px;
+      `;
+  }
+  if (props.$corner === "top-right") {
+    return `
+        top: -2px;
+        right: -2px;
+        border-top-width: 3px;
+        border-right-width: 3px;
+      `;
+  }
+  if (props.$corner === "bottom-left") {
+    return `
+        bottom: -2px;
+        left: -2px;
+        border-bottom-width: 3px;
+        border-left-width: 3px;
+      `;
+  }
+  if (props.$corner === "bottom-right") {
+    return `
+        bottom: -2px;
+        right: -2px;
+        border-bottom-width: 3px;
+        border-right-width: 3px;
+      `;
+  }
+}}
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
+Tt.div`
+  @media print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  @media print {
+    ${(props) => {
+  if (props.$type === "page") {
+    return `
+          page-break-after: always;
+          break-after: page;
+        `;
+  }
+  if (props.$type === "column") {
+    return `
+          column-break-after: always;
+          break-after: column;
+        `;
+  }
+  return `
+        page-break-after: always;
+        break-after: page;
+      `;
+}}
+  }
+
+  @media screen {
+    display: none;
+  }
+`;
+Tt.div`
+  display: ${(props) => props.$hideScreen ? "none" : "block"};
+
+  @media print {
+    display: block !important;
+  }
+
+  @media screen {
+    display: ${(props) => props.$hideScreen ? "none !important" : "block"};
+  }
+`;
+Tt.div`
+  @media print {
+    display: none !important;
+  }
+`;
+Tt.div`
+  display: none;
+
+  @media print {
+    display: block;
+    position: running(header);
+    padding-bottom: var(--resume-space-xs, 0.5rem);
+    border-bottom: 1px solid var(--resume-color-border, #e5e7eb);
+    font-size: var(--resume-size-small, 0.875rem);
+    color: var(--resume-color-secondary, #6b7280);
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+Tt.span`
+  font-weight: 600;
+  color: var(--resume-color-primary, #111827);
+`;
+Tt.div`
+  display: none;
+
+  @media print {
+    display: block;
+    position: running(footer);
+    padding-top: var(--resume-space-xs, 0.5rem);
+    border-top: 1px solid var(--resume-color-border, #e5e7eb);
+    font-size: var(--resume-size-xs, 0.75rem);
+    color: var(--resume-color-secondary, #6b7280);
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+Tt.span`
+  @media print {
+    &::before {
+      content: 'Page ';
+    }
+    &::after {
+      content: ' of ' counter(pages);
+    }
+  }
+`;
+Tt.span`
+  @media print {
+    &::before {
+      content: counter(page);
+    }
+  }
+`;
+Tt.span`
+  font-variant-numeric: tabular-nums;
+`;
+Tt.div`
+  @media print {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: var(--resume-space-xs, 0.5rem) var(--resume-space-base, 1rem);
+    background: var(--resume-color-accent, #f3f4f6);
+    border-bottom: 2px solid var(--resume-color-primary, #111827);
+    z-index: 1000;
+
+    /* Reserve space for unprintable area */
+    margin-top: 0.25in;
+  }
+
+  @media screen {
+    padding: var(--resume-space-xs, 0.5rem) var(--resume-space-base, 1rem);
+    background: var(--resume-color-accent, #f3f4f6);
+    border-bottom: 2px solid var(--resume-color-primary, #111827);
+  }
+`;
+Tt.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--resume-size-small, 0.875rem);
+`;
+Tt.div`
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--resume-color-primary, #111827);
+  font-size: var(--resume-size-base, 1rem);
+`;
+Tt.div`
+  color: var(--resume-color-secondary, #6b7280);
+  font-size: var(--resume-size-small, 0.875rem);
+`;
+Tt.div`
+  @media print {
+    height: 0.75in;
+  }
+
+  @media screen {
+    height: 3rem;
+  }
+`;
+Tt.div`
+  position: relative;
+  background: var(--resume-color-background, #ffffff);
+`;
+Tt.div`
+  position: relative;
+  padding: ${(props) => props.$padding || "var(--resume-space-base, 1rem)"};
+  background: var(--resume-color-background, #ffffff);
+
+  /* Primary border */
+  border: 1px solid var(--resume-color-border, #e5e7eb);
+
+  /* Shadow emulation using pseudo-element */
+  &::after {
+    content: '';
+    position: absolute;
+    top: ${(props) => props.$offset || "4px"};
+    left: ${(props) => props.$offset || "4px"};
+    right: -${(props) => props.$offset || "4px"};
+    bottom: -${(props) => props.$offset || "4px"};
+    border: 1px solid ${(props) => props.$shadowColor || "rgba(0, 0, 0, 0.08)"};
+    border-radius: inherit;
+    z-index: -1;
+
+    @media print {
+      /* Ensure shadow prints - use solid light gray */
+      border-color: ${(props) => props.$printShadowColor || "#f0f0f0"};
+    }
+  }
+`;
+Tt.span`
+  display: inline-block;
+  font-size: ${(props) => props.theme?.typography?.sizes?.small || "var(--resume-size-small, 10px)"};
+  font-weight: ${(props) => props.theme?.typography?.weights?.semibold || "var(--resume-weight-semibold, 600)"};
+  color: ${(props) => props.$color || props.theme?.colors?.secondary || "var(--resume-color-secondary, #4a4a4a)"};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+
+  @media print {
+    font-size: 9pt;
+    color: ${(props) => props.$color || "#4a4a4a"};
+    letter-spacing: 0.08em;
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: ${(props) => props.theme?.typography?.sizes?.small || "var(--resume-size-small, 10px)"};
+  color: ${(props) => props.theme?.colors?.secondary || "var(--resume-color-secondary, #4a4a4a)"};
+  line-height: 1.5;
+
+  /* Ensure 4.5:1 contrast ratio minimum */
+  @media screen {
+    color: #4a4a4a; /* 9.29:1 contrast on white */
+  }
+
+  @media print {
+    font-size: 9pt;
+    color: #4a4a4a;
+    gap: 6px;
+  }
+`;
+Tt.span`
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+
+  &:not(:last-child)::after {
+    content: '${(props) => props.$separator}';
+    margin-left: 8px;
+    opacity: 0.6;
+
+    @media print {
+      margin-left: 6px;
+    }
+  }
+`;
+Tt.div`
+  display: block;
+  font-size: ${(props) => props.theme?.typography?.sizes?.small || "var(--resume-size-small, 10px)"};
+  font-weight: ${(props) => props.theme?.typography?.weights?.semibold || "var(--resume-weight-semibold, 600)"};
+  color: ${(props) => props.theme?.colors?.secondary || "var(--resume-color-secondary, #4a4a4a)"};
+  margin-bottom: 6px;
+  line-height: 1.4;
+
+  /* Tracked uppercase variant */
+  ${(props) => props.$variant === "tracked" && `
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-variant: normal;
+  `}
+
+  /* Small caps variant */
+  ${(props) => props.$variant === "caps" && `
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+  `}
+
+  @media print {
+    font-size: 9pt;
+    color: #4a4a4a;
+    margin-bottom: 4px;
+
+    ${(props) => props.$variant === "tracked" && `
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    `}
+
+    ${(props) => props.$variant === "caps" && `
+      font-variant: small-caps;
+      letter-spacing: 0.05em;
+    `}
+  }
+`;
+Tt.span`
+  display: inline-block;
+  font-size: ${(props) => {
+  if (props.$size === "xs") return "8pt";
+  return "9pt";
+}};
+  font-weight: ${(props) => props.theme?.typography?.weights?.medium || "var(--resume-weight-medium, 500)"};
+  /* Ensure 4.5:1 contrast minimum - #767676 provides 4.54:1 on white */
+  color: #767676;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+
+  @media print {
+    font-size: ${(props) => {
+  if (props.$size === "xs") return "8pt";
+  return "9pt";
+}};
+    color: #767676;
+    letter-spacing: 0.08em;
+  }
+`;
+Tt.h2`
+  font-size: ${(props) => {
+  if (props.$size === "sm") return "11pt";
+  if (props.$size === "lg") return "13pt";
+  return "12pt";
+}};
+  font-weight: ${(props) => props.theme?.typography?.weights?.semibold || "var(--resume-weight-semibold, 600)"};
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #1a1a1a)"};
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  margin: 0 0 12px 0;
+  text-transform: lowercase; /* Allows font-variant to work properly */
+
+  @media print {
+    font-size: ${(props) => {
+  if (props.$size === "sm") return "11pt";
+  if (props.$size === "lg") return "13pt";
+  return "12pt";
+}};
+    color: #1a1a1a;
+    letter-spacing: 0.06em;
+    margin: 0 0 10px 0;
+    font-variant: small-caps;
+    page-break-after: avoid;
+  }
+`;
+Tt.div`
+  background: ${(props) => {
+  if (props.$tint === "accent") {
+    return props.theme?.colors?.accentMuted || "var(--resume-color-accent-muted, rgba(0, 102, 204, 0.06))";
+  }
+  if (props.$tint === "warm") {
+    return "var(--resume-color-warm-muted, rgba(102, 51, 0, 0.05))";
+  }
+  if (props.$tint === "cool") {
+    return "var(--resume-color-cool-muted, rgba(0, 51, 102, 0.05))";
+  }
+  return props.theme?.colors?.muted || "var(--resume-color-muted, #f5f5f5)";
+}};
+
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+
+  padding: ${(props) => {
+  if (props.$padding === "sm") return "12px";
+  if (props.$padding === "lg") return "24px";
+  return "16px";
+}};
+
+  border-radius: ${(props) => props.theme?.radius?.md || "var(--resume-radius-md, 6px)"};
+
+  margin: ${(props) => {
+  if (props.$margin === "sm") return "8px 0";
+  if (props.$margin === "lg") return "24px 0";
+  if (props.$margin === "none") return "0";
+  return "16px 0";
+}};
+
+  /* High text contrast for readability */
+  line-height: 1.6;
+  font-size: 10pt;
+
+  /* Ensure content spacing */
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    /* Use subtle backgrounds that print well */
+    background: ${(props) => {
+  if (props.$tint === "accent") return "rgba(0, 102, 204, 0.05)";
+  if (props.$tint === "warm") return "rgba(102, 51, 0, 0.04)";
+  if (props.$tint === "cool") return "rgba(0, 51, 102, 0.04)";
+  return "#f8f8f8";
+}};
+
+    /* Ensure high contrast text for printing */
+    color: #000;
+
+    /* Remove border radius for cleaner print appearance */
+    border-radius: 0;
+
+    /* Adjust spacing for print density */
+    padding: ${(props) => {
+  if (props.$padding === "sm") return "10px";
+  if (props.$padding === "lg") return "20px";
+  return "14px";
+}};
+
+    /* Prevent orphaned panels */
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  border-left: 4px solid
+    ${(props) => {
+  if (props.$variant === "success")
+    return "var(--resume-color-success, #22c55e)";
+  if (props.$variant === "warning")
+    return "var(--resume-color-warning, #f59e0b)";
+  if (props.$variant === "info") return "var(--resume-color-info, #3b82f6)";
+  return props.theme?.colors?.accent || "var(--resume-color-accent, #0066cc)";
+}};
+
+  background: ${(props) => {
+  if (props.$variant === "success")
+    return "var(--resume-color-success-light, rgba(34, 197, 94, 0.08))";
+  if (props.$variant === "warning")
+    return "var(--resume-color-warning-light, rgba(245, 158, 11, 0.08))";
+  if (props.$variant === "info")
+    return "var(--resume-color-info-light, rgba(59, 130, 246, 0.08))";
+  return props.theme?.colors?.accentLight || "var(--resume-color-accent-light, rgba(0, 102, 204, 0.08))";
+}};
+
+  padding: ${(props) => props.$size === "sm" ? "12px 16px" : "16px 20px"}; /* default md */
+
+  margin: 16px 0;
+  border-radius: ${(props) => props.theme?.radius?.md || "var(--resume-radius-md, 6px)"};
+
+  /* Ensure high contrast text, no reversed text */
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+
+  @media print {
+    /* Solid border for print clarity */
+    border-left: 3pt solid
+      ${(props) => {
+  if (props.$variant === "success") return "#22c55e";
+  if (props.$variant === "warning") return "#f59e0b";
+  if (props.$variant === "info") return "#3b82f6";
+  return "#0066cc";
+}};
+
+    /* Lighter background for print */
+    background: ${(props) => {
+  if (props.$variant === "success") return "rgba(34, 197, 94, 0.05)";
+  if (props.$variant === "warning") return "rgba(245, 158, 11, 0.05)";
+  if (props.$variant === "info") return "rgba(59, 130, 246, 0.05)";
+  return "rgba(0, 102, 204, 0.05)";
+}};
+
+    /* Remove border radius */
+    border-radius: 0;
+
+    /* Ensure black text for maximum contrast */
+    color: #000;
+
+    /* Prevent splitting across pages */
+    page-break-inside: avoid;
+  }
+`;
+Tt.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  /* Icon styling */
+  .callout-icon {
+    font-size: 16pt;
+    line-height: 1;
+  }
+`;
+Tt.div`
+  /* Bold, larger title for emphasis (as per design constraints) */
+  font-size: ${(props) => props.$size === "sm" ? "11pt" : "12pt"};
+  font-weight: 700;
+  color: ${(props) => {
+  if (props.$variant === "success")
+    return "var(--resume-color-success-dark, #16a34a)";
+  if (props.$variant === "warning")
+    return "var(--resume-color-warning-dark, #d97706)";
+  if (props.$variant === "info")
+    return "var(--resume-color-info-dark, #2563eb)";
+  return props.theme?.colors?.accent || "var(--resume-color-accent, #0066cc)";
+}};
+
+  @media print {
+    /* Maintain weight and bump size slightly for print */
+    font-weight: 700;
+    font-size: ${(props) => props.$size === "sm" ? "11pt" : "12pt"};
+    color: #000;
+  }
+`;
+Tt.div`
+  font-size: 10pt;
+  line-height: 1.6;
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+`;
+Tt.div`
+  /* 1pt stroke as specified */
+  border: 1px solid
+    ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accentBorder || "var(--resume-color-accent-border, #cce5ff)";
+  }
+  if (props.$variant === "muted") {
+    return props.theme?.colors?.border || "var(--resume-color-border, #e5e5e5)";
+  }
+  return props.theme?.colors?.borderLight || "var(--resume-color-border-light, #d4d4d4)";
+}};
+
+  /* Rounded corners for softness */
+  border-radius: ${(props) => {
+  if (props.$rounded === "sm") return "4px";
+  if (props.$rounded === "lg") return "12px";
+  return props.theme?.radius?.md || "var(--resume-radius-md, 8px)";
+}};
+
+  /* No shadows - clean outline only */
+  box-shadow: none;
+
+  /* Padding options */
+  padding: ${(props) => {
+  if (props.$padding === "sm") return "12px";
+  if (props.$padding === "lg") return "24px";
+  return "16px";
+}};
+
+  margin: ${(props) => {
+  if (props.$margin === "sm") return "8px 0";
+  if (props.$margin === "lg") return "24px 0";
+  if (props.$margin === "none") return "0";
+  return "16px 0";
+}};
+
+  /* Optional subtle background */
+  background: ${(props) => {
+  if (props.$background === "accent") {
+    return props.theme?.colors?.accentMuted || "var(--resume-color-accent-muted, rgba(0, 102, 204, 0.03))";
+  }
+  if (props.$background === "muted") {
+    return "var(--resume-color-background-muted, rgba(0, 0, 0, 0.02))";
+  }
+  return "transparent";
+}};
+
+  /* Text styling */
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+
+  /* Content spacing */
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    /* Ensure border prints clearly */
+    border: 1pt solid
+      ${(props) => {
+  if (props.$variant === "accent") return "#b3d9ff";
+  if (props.$variant === "muted") return "#d4d4d4";
+  return "#c0c0c0";
+}};
+
+    /* Remove border radius for print (cleaner appearance) */
+    border-radius: 0;
+
+    /* Remove background fills for print */
+    background: transparent;
+
+    /* Ensure high contrast text */
+    color: #000;
+
+    /* Adjust padding for print density */
+    padding: ${(props) => {
+  if (props.$padding === "sm") return "10px";
+  if (props.$padding === "lg") return "20px";
+  return "14px";
+}};
+
+    /* Prevent splitting card across pages */
+    page-break-inside: avoid;
+
+    /* Ensure no page edge collision */
+    margin-left: 0;
+    margin-right: 0;
+  }
+`;
+Tt.div`
+  /* Light frame - subtle border */
+  border: 1px solid
+    ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accentBorder || "var(--resume-color-accent-border, #e0e0e0)";
+  }
+  if (props.$variant === "minimal") {
+    return "transparent";
+  }
+  return props.theme?.colors?.borderLight || "var(--resume-color-border-light, #e5e5e5)";
+}};
+
+  /* Optional background tint */
+  background: ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accentMuted || "var(--resume-color-accent-muted, rgba(0, 102, 204, 0.02))";
+  }
+  if (props.$variant === "tinted") {
+    return "var(--resume-color-background-muted, rgba(0, 0, 0, 0.01))";
+  }
+  return "transparent";
+}};
+
+  /* Consistent padding to prevent edge collision */
+  padding: ${(props) => {
+  if (props.$padding === "sm") return "12px 16px";
+  if (props.$padding === "lg") return "20px 24px";
+  return "16px 20px";
+}};
+
+  /* Spacing between role blocks */
+  margin: ${(props) => {
+  if (props.$spacing === "sm") return "12px 0";
+  if (props.$spacing === "lg") return "24px 0";
+  if (props.$spacing === "none") return "0";
+  return "16px 0";
+}};
+
+  /* Subtle rounding */
+  border-radius: ${(props) => props.theme?.radius?.sm || "var(--resume-radius-sm, 4px)"};
+
+  /* Text styling */
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000)"};
+
+  /* Content spacing */
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Ensure proper spacing for nested elements */
+  h3,
+  h4 {
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 4px 0;
+  }
+
+  ul,
+  ol {
+    margin: 8px 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin: 4px 0;
+  }
+
+  @media print {
+    /* Ensure border prints clearly */
+    border: ${(props) => {
+  if (props.$variant === "minimal") return "none";
+  if (props.$variant === "accent") return "0.5pt solid #d0d0d0";
+  return "0.5pt solid #e0e0e0";
+}};
+
+    /* Remove background for clean print */
+    background: transparent;
+
+    /* Remove border radius for print */
+    border-radius: 0;
+
+    /* Adjust padding for print density */
+    padding: ${(props) => {
+  if (props.$padding === "sm") return "10px 12px";
+  if (props.$padding === "lg") return "16px 20px";
+  return "12px 16px";
+}};
+
+    /* Prevent page edge collision - ensure margins */
+    margin-left: 0;
+    margin-right: 0;
+
+    /* Prevent splitting role blocks across pages */
+    page-break-inside: avoid;
+
+    /* Add small gap after each block for readability */
+    margin-bottom: ${(props) => {
+  if (props.$spacing === "sm") return "10px";
+  if (props.$spacing === "lg") return "20px";
+  if (props.$spacing === "none") return "0";
+  return "14px";
+}};
+
+    /* Ensure high contrast text */
+    color: #000;
+
+    /* Optimize nested element spacing for print */
+    h3,
+    h4 {
+      margin-bottom: 6px;
+    }
+
+    ul,
+    ol {
+      margin: 6px 0;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ${(props) => props.$size === "small" ? "6px" : "8px"};
+  margin: ${(props) => props.$size === "small" ? "4px 0" : "6px 0"};
+  line-height: ${(props) => props.theme?.typography?.lineHeight || "var(--resume-line-height, 1.5)"};
+
+  @media print {
+    gap: ${(props) => props.$size === "small" ? "4px" : "6px"};
+    margin: 3pt 0;
+  }
+`;
+Tt.span`
+  display: inline-block;
+  font-size: ${(props) => {
+  if (props.$size === "small") return "8.5pt";
+  if (props.$size === "large") return "10.5pt";
+  return "9.5pt";
+}};
+  font-weight: 500;
+  color: ${(props) => props.theme?.colors?.secondary || "var(--resume-color-secondary, #444444)"};
+  white-space: nowrap;
+
+  /* Preserve baseline grid */
+  vertical-align: baseline;
+
+  @media print {
+    color: #444444;
+    font-size: ${(props) => {
+  if (props.$size === "small") return "8pt";
+  if (props.$size === "large") return "10pt";
+  return "9pt";
+}};
+  }
+`;
+Tt.span`
+  display: inline-block;
+  font-size: ${(props) => {
+  if (props.$size === "small") return "8.5pt";
+  if (props.$size === "large") return "10.5pt";
+  return "9.5pt";
+}};
+  color: ${(props) => props.theme?.colors?.border || "var(--resume-color-border, #cccccc)"};
+  user-select: none;
+  vertical-align: baseline;
+
+  @media print {
+    color: #cccccc;
+  }
+`;
+Tt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${(props) => props.$size === "small" ? "6px" : "8px"};
+  margin: ${(props) => props.$size === "small" ? "6px 0" : "8px 0"};
+
+  @media print {
+    gap: ${(props) => props.$size === "small" ? "4px" : "6px"};
+    margin: 4pt 0;
+  }
+`;
+Tt.span`
+  display: inline-flex;
+  align-items: center;
+  padding: ${(props) => {
+  if (props.$size === "small") return "3px 10px";
+  if (props.$size === "large") return "7px 16px";
+  return "5px 12px";
+}};
+  border: ${(props) => props.$strokeWidth || "0.5pt"} solid
+    ${(props) => props.theme?.colors?.border || "var(--resume-color-border, #666666)"};
+  border-radius: ${(props) => props.$rounded ? "999px" : props.theme?.radius?.sm || "var(--resume-radius-sm, 4px)"};
+  font-size: ${(props) => {
+  if (props.$size === "small") return "8.5pt";
+  if (props.$size === "large") return "10.5pt";
+  return "9.5pt";
+}};
+  font-weight: 500;
+  color: ${(props) => props.theme?.colors?.primary || "var(--resume-color-primary, #000000)"};
+  background: transparent;
+  white-space: nowrap;
+  line-height: 1.2;
+
+  /* Prevent scalloping on low-DPI displays */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media print {
+    /* Ensure minimum stroke width for print clarity */
+    border-width: ${(props) => {
+  const width = props.$strokeWidth || "0.5pt";
+  return width;
+}};
+    border-color: #666666;
+    color: #000000;
+    padding: ${(props) => {
+  if (props.$size === "small") return "2pt 8pt";
+  if (props.$size === "large") return "5pt 12pt";
+  return "3pt 10pt";
+}};
+    font-size: ${(props) => {
+  if (props.$size === "small") return "8pt";
+  if (props.$size === "large") return "10pt";
+  return "9pt";
+}};
+
+    /* Force exact colors for print */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+`;
 const Layout = Tt.div`
   max-width: 900px;
   margin: 0 auto;

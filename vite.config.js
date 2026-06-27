@@ -24,6 +24,8 @@ export default defineConfig({
   ssr: {
     // Force bundle these packages instead of externalizing
     noExternal: [
+      '@jsonresume/core',
+      '@jsonresume/utils',
       'styled-components',
       '@emotion/is-prop-valid',
       'stylis',
