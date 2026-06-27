@@ -103,9 +103,9 @@
   }
 
   /* Prevent awkward breaks */
-  .resume-section {
+  /*.resume-section {
     page-break-inside: avoid;
-  }
+  }*/
 
   .resume-item {
     break-inside: avoid;

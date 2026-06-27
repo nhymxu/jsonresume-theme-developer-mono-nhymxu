@@ -1,4 +1,4 @@
-import { jsx, jsxs } from "react/jsx-runtime";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { renderToStaticMarkup } from "react-dom/server";
 import o, { useRef, useContext, useState, useMemo, useEffect, useDebugValue, createElement, createContext } from "react";
 var __assign = function() {
@@ -1384,7 +1384,7 @@ const StyledSection = dt.section`
   margin-bottom: ${(props) => props.theme?.spacing?.section || "var(--resume-space-section, 2rem)"};
 
   @media print {
-    page-break-inside: avoid;
+    /*page-break-inside: avoid;*/
   }
 `;
 function Section({ children, className, id, ...rest }) {
@@ -1761,7 +1761,7 @@ const StyledLink = dt.a`
 
   @media print {
     color: inherit;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 `;
 function Link({ href, children, className, ...rest }) {
@@ -5972,7 +5972,7 @@ dt.div`
     margin-right: 0;
 
     /* Prevent splitting role blocks across pages */
-    page-break-inside: avoid;
+    /*page-break-inside: avoid;*/
 
     /* Add small gap after each block for readability */
     margin-bottom: ${(props) => {
@@ -6230,7 +6230,7 @@ const WorkHighlights = dt.ul`
     line-height: 1.6;
     color: #374151;
     position: relative;
-    padding-left: 12px;
+    padding-left: 16px;
 
     &::before {
       content: '→';
@@ -6288,6 +6288,85 @@ const SimpleItem = dt.div`
     color: #111827;
   }
 `;
+
+const StyledBadge = dt.span`
+  display: inline-block;
+  padding: ${(props) => {
+  if (props.$size === "sm") return "2px 8px";
+  if (props.$size === "lg") return "6px 16px";
+  return "4px 12px";
+}};
+  border-radius: ${(props) => props.theme?.radius?.sm || "var(--resume-radius-sm, 4px)"};
+  font-size: ${(props) => {
+  if (props.$size === "sm") return "8pt";
+  if (props.$size === "lg") return "10pt";
+  return "8pt";
+}};
+  font-weight: 500;
+  background: ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accentLight || "var(--resume-color-accent-light, #e6f2ff)";
+  }
+  if (props.$variant === "secondary") {
+    return props.theme?.colors?.muted || "var(--resume-color-muted, #f5f5f5)";
+  }
+  return props.theme?.colors?.muted || "var(--resume-color-muted, #f5f5f5)";
+}};
+  color: ${(props) => {
+  if (props.$variant === "accent") {
+    return props.theme?.colors?.accent || "var(--resume-color-accent, #0066cc)";
+  }
+  return props.theme?.colors?.primary || "var(--resume-color-primary, #000)";
+}};
+
+  @media print {
+    background: ${(props) => props.$variant === "accent" ? "#e6f2ff" : "#f5f5f5"};
+    color: ${(props) => props.$variant === "accent" ? "#0066cc" : "#000"};
+  }
+`;
+function Badge({
+  children,
+  variant = "default",
+  size = "md",
+  className,
+  ...rest
+}) {
+  return /* @__PURE__ */ jsx(
+    StyledBadge,
+    {
+      $variant: variant,
+      $size: size,
+      className: `resume-badge resume-badge-${variant} ${className || ""}`.trim(),
+      ...rest,
+      children
+    }
+  );
+}
+const BadgeContainer = dt.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+`;
+function BadgeList({
+  children,
+  items,
+  variant = "default",
+  size = "md",
+  className,
+  ...rest
+}) {
+  const content = items ? items.map((item, index2) => /* @__PURE__ */ jsx(Badge, { variant, size, children: item }, index2)) : children;
+  return /* @__PURE__ */ jsx(
+    BadgeContainer,
+    {
+      className: `resume-badge-list ${className || ""}`.trim(),
+      ...rest,
+      children: content
+    }
+  );
+}
+
 function Resume({ resume }) {
   const {
     basics = {},
@@ -6308,6 +6387,7 @@ function Resume({ resume }) {
       basics.name && /* @__PURE__ */ jsx(Name, { children: basics.name }),
       basics.label && /* @__PURE__ */ jsx(Label, { children: basics.label }),
       /* @__PURE__ */ jsxs(ContactWrapper, { children: [
+        jsx(ContactInfo, {basics: basics}),
         basics.email && /* @__PURE__ */ jsx(ContactInfo, { type: "email", children: basics.email }),
         basics.phone && /* @__PURE__ */ jsx(ContactInfo, { type: "phone", children: basics.phone }),
         basics.location?.city && basics.location?.region && /* @__PURE__ */ jsxs(ContactInfo, { type: "location", children: [
@@ -6353,7 +6433,11 @@ function Resume({ resume }) {
           ) })
         ] }),
         project.description && /* @__PURE__ */ jsx(WorkDescription, { children: project.description }),
-        project.highlights && project.highlights.length > 0 && /* @__PURE__ */ jsx(WorkHighlights, { children: project.highlights.map((highlight, i) => /* @__PURE__ */ jsx("li", { children: highlight }, i)) })
+        project.highlights && project.highlights.length > 0 && /* @__PURE__ */ jsx(WorkHighlights, { children: project.highlights.map((highlight, i) => /* @__PURE__ */ jsx("li", { children: highlight }, i)) }),
+        project.keywords && project.keywords.length > 0 && /* @__PURE__ */ jsxs(Fragment, { children: [
+          // /* @__PURE__ */ jsx("br", {}),
+          /* @__PURE__ */ jsx(BadgeList, { items: project.keywords, variant: "accent" })
+        ] })
       ] }, index))
     ] }),
     education.length > 0 && /* @__PURE__ */ jsxs(MainSection, { children: [
