@@ -208,6 +208,24 @@ const SimpleItem = styled.div`
   }
 `;
 
+const StyledBadgeList = styled(BadgeList)`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+`;
+
+const StyledBadge = styled(Badge)`
+  font-family: 'Poiret One', serif;
+  font-size: 8px;
+  letter-spacing: 1px;
+  background: transparent;
+  color: #0066cc;
+  border: 1px solid;
+  border-radius: 0;
+  padding: 4px 12px;
+`;
+
 function Resume({ resume }) {
   const {
     basics = {},
@@ -310,6 +328,13 @@ function Resume({ resume }) {
                     <li key={i}>{highlight}</li>
                   ))}
                 </WorkHighlights>
+              )}
+              {project.keywords && project.keywords.length > 0 && (
+                <StyledBadgeList style={{ marginTop: '14px' }}>
+                  {project.keywords.map((kw, ki) => (
+                    <StyledBadge key={ki}>{kw}</StyledBadge>
+                  ))}
+                </StyledBadgeList>
               )}
             </WorkItem>
           ))}

@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { renderResumeDocument } from "@jsonresume/core/ssr";
 import t, { createElement } from "react";
-import { ContactInfo, DateRange, Link, safeUrl, Section, SectionTitle } from "@jsonresume/core";
+import { ContactInfo, DateRange, Link, safeUrl, Section, SectionTitle, BadgeList, Badge } from "@jsonresume/core";
 function memoize(fn) {
   var cache = /* @__PURE__ */ Object.create(null);
   return function(arg) {
@@ -1450,6 +1450,22 @@ const SimpleItem = Tt.div`
     color: #111827;
   }
 `;
+const StyledBadgeList = Tt(BadgeList)`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+`;
+const StyledBadge = Tt(Badge)`
+  font-family: 'Poiret One', serif;
+  font-size: 8px;
+  letter-spacing: 1px;
+  background: transparent;
+  color: #0066cc;
+  border: 1px solid;
+  border-radius: 0;
+  padding: 4px 12px;
+`;
 function Resume({ resume }) {
   const {
     basics = {},
@@ -1505,7 +1521,8 @@ function Resume({ resume }) {
           ) })
         ] }),
         project.description && /* @__PURE__ */ jsx(WorkDescription, { children: project.description }),
-        project.highlights && project.highlights.length > 0 && /* @__PURE__ */ jsx(WorkHighlights, { children: project.highlights.map((highlight, i2) => /* @__PURE__ */ jsx("li", { children: highlight }, i2)) })
+        project.highlights && project.highlights.length > 0 && /* @__PURE__ */ jsx(WorkHighlights, { children: project.highlights.map((highlight, i2) => /* @__PURE__ */ jsx("li", { children: highlight }, i2)) }),
+        project.keywords && project.keywords.length > 0 && /* @__PURE__ */ jsx(StyledBadgeList, { style: { marginTop: "14px" }, children: project.keywords.map((kw, ki) => /* @__PURE__ */ jsx(StyledBadge, { children: kw }, ki)) })
       ] }, index))
     ] }),
     education.length > 0 && /* @__PURE__ */ jsxs(MainSection, { children: [
