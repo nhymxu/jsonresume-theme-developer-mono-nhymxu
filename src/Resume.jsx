@@ -211,18 +211,15 @@ const SimpleItem = styled.div`
 const StyledBadgeList = styled(BadgeList)`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 8px;
 `;
 
 const StyledBadge = styled(Badge)`
-  font-family: 'Poiret One', serif;
   font-size: 8px;
-  letter-spacing: 1px;
-  background: transparent;
-  color: #0066cc;
-  border: 1px solid;
-  border-radius: 0;
+  font-weight: 500;
+  background: var(--resume-color-accent-light, #e6f2ff);
+  color: var(--resume-color-accent, #0066cc);
+  border-radius: var(--resume-radius-sm, 4px);
   padding: 4px 12px;
 `;
 
