@@ -1,6 +1,6 @@
 {
   "name": "jsonresume-theme-developer-mono-nhymxu",
-  "version": "0.2.3-3",
+  "version": "0.2.3-4",
   "description": "Technical, efficient theme with monospace headers and sans-serif body. Code-style aesthetics for developers. Customized by nhymxu",
   "type": "module",
   "main": "./dist/index.js",
