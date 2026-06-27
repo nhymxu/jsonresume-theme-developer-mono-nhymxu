@@ -1690,7 +1690,7 @@ function DateRange({
     }
   );
 }
-const StyledBadge$1 = Tt.span`
+const StyledBadge = Tt.span`
   display: inline-block;
   padding: ${(props) => {
   if (props.$size === "sm") return "2px 8px";
@@ -1733,7 +1733,7 @@ function Badge({
   ...rest
 }) {
   return /* @__PURE__ */ jsx(
-    StyledBadge$1,
+    StyledBadge,
     {
       $variant: variant,
       $size: size,
@@ -6438,19 +6438,6 @@ const SimpleItem = Tt.div`
     color: #111827;
   }
 `;
-const StyledBadgeList = Tt(BadgeList)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-const StyledBadge = Tt(Badge)`
-  font-size: 8px;
-  font-weight: 500;
-  background: var(--resume-color-accent-light, #e6f2ff);
-  color: var(--resume-color-accent, #0066cc);
-  border-radius: var(--resume-radius-sm, 4px);
-  padding: 4px 12px;
-`;
 function Resume({ resume }) {
   const {
     basics = {},
@@ -6507,7 +6494,7 @@ function Resume({ resume }) {
         ] }),
         project.description && /* @__PURE__ */ jsx(WorkDescription, { children: project.description }),
         project.highlights && project.highlights.length > 0 && /* @__PURE__ */ jsx(WorkHighlights, { children: project.highlights.map((highlight, i2) => /* @__PURE__ */ jsx("li", { children: highlight }, i2)) }),
-        project.keywords && project.keywords.length > 0 && /* @__PURE__ */ jsx(StyledBadgeList, { style: { marginTop: "14px" }, children: project.keywords.map((kw, ki) => /* @__PURE__ */ jsx(StyledBadge, { children: kw }, ki)) })
+        project.keywords && project.keywords.length > 0 && /* @__PURE__ */ jsx(BadgeList, { style: { marginTop: "14px" }, children: project.keywords.map((kw, ki) => /* @__PURE__ */ jsx(Badge, { variant: "accent", style: { fontSize: "8pt" }, children: kw }, ki)) })
       ] }, index))
     ] }),
     education.length > 0 && /* @__PURE__ */ jsxs(MainSection, { children: [

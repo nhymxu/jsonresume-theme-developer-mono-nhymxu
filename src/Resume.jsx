@@ -208,21 +208,6 @@ const SimpleItem = styled.div`
   }
 `;
 
-const StyledBadgeList = styled(BadgeList)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
-const StyledBadge = styled(Badge)`
-  font-size: 8px;
-  font-weight: 500;
-  background: var(--resume-color-accent-light, #e6f2ff);
-  color: var(--resume-color-accent, #0066cc);
-  border-radius: var(--resume-radius-sm, 4px);
-  padding: 4px 12px;
-`;
-
 function Resume({ resume }) {
   const {
     basics = {},
@@ -327,11 +312,11 @@ function Resume({ resume }) {
                 </WorkHighlights>
               )}
               {project.keywords && project.keywords.length > 0 && (
-                <StyledBadgeList style={{ marginTop: '14px' }}>
+                <BadgeList style={{ marginTop: '14px' }}>
                   {project.keywords.map((kw, ki) => (
-                    <StyledBadge key={ki}>{kw}</StyledBadge>
+                    <Badge key={ki} variant='accent' style={{ fontSize: '8pt', }}>{kw}</Badge>
                   ))}
-                </StyledBadgeList>
+                </BadgeList>
               )}
             </WorkItem>
           ))}
