@@ -143,7 +143,7 @@ const WorkHighlights = styled.ul`
     line-height: 1.6;
     color: #374151;
     position: relative;
-    padding-left: 12px;
+    padding-left: 18px;
 
     &::before {
       content: '→';
